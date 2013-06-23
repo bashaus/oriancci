@@ -5,7 +5,7 @@ namespace Oriancci;
 use Oriancci\Models\User;
 use Oriancci\Models\Department;
 
-class ModelBTREETest extends OriancciTest
+class BTreeTest extends OriancciTest
 {
 
     /* insertRoot *
