@@ -1,0 +1,22 @@
+{
+    "name": "oriancci/oriancci",
+    "description": "ActiveRecord ORM for PHP",
+    "homepage": "http://github.com/bashaus/oriancci",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bashkim Isai",
+            "homepage": "http://bashkim.com.au"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "psr/log": "~1.0",
+        "monolog/monolog": "1.6.*@dev"
+    },
+    "autoload": {
+        "files": [ "src/Oriancci/constants.php" ],
+        "psr-0": {"Oriancci": "src/"}
+    }
+}

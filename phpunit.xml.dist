@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="tests/bootstrap.php" colors="true">
+    <php>
+        <const name="ORIANCCI_PHPUNIT_HOSTTYPE" value="mysql" />
+        <const name="ORIANCCI_PHPUNIT_HOSTNAME" value="localhost" />
+        <const name="ORIANCCI_PHPUNIT_USERNAME" value="" />
+        <const name="ORIANCCI_PHPUNIT_PASSWORD" value="" />
+        <const name="ORIANCCI_PHPUNIT_DATABASE" value="" />
+    </php>
+
+    <testsuites>
+        <testsuite name="Oriancci">
+            <directory>tests/Oriancci/units/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/Oriancci/</directory>
+        </whitelist>
+    </filter>
+</phpunit>

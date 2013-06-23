@@ -1,0 +1,145 @@
+<?php
+
+namespace Oriancci;
+
+use Oriancci\Models\User;
+
+class ModelTest extends OriancciTest
+{
+
+    /* static - get */
+
+    public function testGetByPrimaryKey()
+    {
+        $user = User::get(1);
+        $this->assertInstanceOf('Oriancci\Models\User', $user);
+    }
+
+    /* static - find */
+
+    public function testFindAll()
+    {
+        $users = User::find();
+        $this->assertInstanceOf('Oriancci\Result\Collection', $users);
+        $this->assertEquals(13, $users->count());
+    }
+
+    public function testFindWhere()
+    {
+        $findUsers = User::find([WHERE => 'gender = :gender']);
+        $users = $findUsers->select([':gender' => 'M']);
+        
+        $this->assertInstanceOf('Oriancci\Result\Collection', $users);
+        $this->assertNotEquals(0, $users->count());
+    }
+
+    /* static - count */
+
+    public function testCount()
+    {
+        $this->assertEquals(13, User::count());
+    }
+
+    /* static - getBy */
+
+    public function testGetByMethodExists()
+    {
+        $user = User::getByFirstName('Adam');
+        $this->assertInstanceOf('Oriancci\Models\User', $user);
+    }
+
+    public function testGetByMethodDoesntExist()
+    {
+        $user = User::getByFirstName('Ben');
+        $this->assertFalse($user);
+    }
+
+    /* static - findBy */
+
+    public function testFindByMethodConjunctionOr()
+    {
+        $users = User::findByFirstNameOrLastName('Adam', 'Adam');
+        $this->assertInstanceOf('Oriancci\Result\Collection', $users);
+        $this->assertEquals(1, $users->count());
+    }
+
+    public function testFindByMethodConjunctionAnd()
+    {
+        $users = User::findByFirstNameAndLastName('Adam', 'Adam');
+        $this->assertInstanceOf('Oriancci\Result\Collection', $users);
+        $this->assertEquals(0, $users->count());
+    }
+    
+    /* static - countBy */
+
+    public function testCountBy()
+    {
+        $usersByGender = User::countByGender();
+        $this->assertArrayHasKey('M', $usersByGender);
+        $this->assertArrayHasKey('F', $usersByGender);
+
+        $this->assertEquals(7, $usersByGender['M']);
+        $this->assertEquals(6, $usersByGender['F']);
+    }
+
+    /* instance - save */
+
+    public function testSaveInsert()
+    {
+        $rows = $this->getConnection()->getRowCount(User::tableName());
+
+        $user = new User;
+        $user->firstName = 'Andrea';
+        $user->lastName = 'Nelly';
+        $user->email = 'andrea.nelly@example.com';
+        $user->gender = 'F';
+        $user->birthday = new \Oriancci\DataType\DateTime('1980-12-12');
+
+        $this->assertTrue($user->save());
+        $this->assertEquals($rows + 1, $this->getConnection()->getRowCount(User::tableName()));
+    }
+
+    public function testSaveUpdate()
+    {
+        $rows = $this->getConnection()->getRowCount(User::tableName());
+
+        $user = User::get(1);
+        $user->firstName = 'Alfred';
+
+        $this->assertTrue($user->save());
+        $this->assertEquals($rows, $this->getConnection()->getRowCount(User::tableName()));
+    }
+
+    public function testSaveAutoIncrement()
+    {
+        $user = new User([
+            'firstName' => 'Jamie', 
+            'lastName'  => 'Fino',
+            'email'     => 'jamie.fino@example.com', 
+            'gender'    => 'M',
+            'birthday'  => new \Oriancci\Datatype\Datetime('1982-10-01')
+        ]);
+
+        $this->assertTrue($user->save());
+        $this->assertNotNull($user->autoIncrement());
+    }
+
+    /* instance - constructor */
+
+    public function testConstructor()
+    {
+        $user = new User([
+            'firstName' => 'Jamie', 
+            'lastName'  => 'Fino',
+            'email'     => 'em@il.com', 
+            'gender'    => 'M',
+            'birthday'  => '1982-10-01'
+        ]);
+
+        $this->assertEquals('Jamie'     , $user->firstName);
+        $this->assertEquals('Fino'      , $user->lastName);
+        $this->assertEquals('em@il.com' , $user->email);
+        $this->assertEquals('M'         , $user->gender);
+        $this->assertEquals('1982-10-01', $user->birthday->format('Y-m-d'));
+    }
+}

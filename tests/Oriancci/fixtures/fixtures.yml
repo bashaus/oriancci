@@ -1,0 +1,128 @@
+department:
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    id: 1
+    name: "Technical"
+    lft: 1
+    rgt: 6
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    id: 2
+    name: "Front-end"
+    lft: 2
+    rgt: 3
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    id: 3
+    name: "Back-end"
+    lft: 4
+    rgt: 5
+
+user:
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    firstName: "Adam"
+    lastName: "Neasden"
+    email: "alpha.neasden@example.com"
+    gender: "M"
+    birthday: "1985-04-22"
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    firstName: "Belinda"
+    lastName: "Oval"
+    email: "bravo.oval@example.com"
+    gender: "F"
+    birthday: "1987-09-08"
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    firstName: "Charlie"
+    lastName: "Pimlico"
+    email: "charlie.pimlico@example.com"
+    gender: "M"
+    birthday: "1981-02-19"
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    firstName: "Daniella"
+    lastName: "Queensbury"
+    email: "daniella.queensbury@example.com"
+    gender: "F"
+    birthday: "1980-12-05"
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    firstName: "Evan"
+    lastName: "Ruislip"
+    email: "eduardo.ruislip@example.com"
+    gender: "M"
+    birthday: "1980-12-05"
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    firstName: "Francesca"
+    lastName: "Stockwell"
+    email: "fred.stockwell@example.com"
+    gender: "F"
+    birthday: "1980-12-05"
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    firstName: "Gavin"
+    lastName: "Tooting"
+    email: "gavin.tooting@example.com"
+    gender: "M"
+    birthday: "1980-12-05"
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    firstName: "Harrison"
+    lastName: "Upney"
+    email: "harrison.upney@example.com"
+    gender: "F"
+    birthday: "1980-12-05"
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    firstName: "Ian"
+    lastName: "Victoria"
+    email: "ian.victoria@example.com"
+    gender: "M"
+    birthday: "1980-12-05"
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    firstName: "Jesse"
+    lastName: "Willesden"
+    email: "jesse.willesden@example.com"
+    gender: "F"
+    birthday: "1980-12-05"
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    firstName: "Kevin"
+    lastName: "Xray"
+    email: "gavin.xray@example.com"
+    gender: "M"
+    birthday: "1980-12-05"
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    firstName: "Lea"
+    lastName: "Yeading"
+    email: "lea.yeading@example.com"
+    gender: "F"
+    birthday: "1980-12-05"
+  -
+    createdAt: "2013-01-01 00:00:00"
+    updatedAt: "2013-01-01 00:00:00"
+    firstName: "Matthew"
+    lastName: "Zambia"
+    email: "matthew.zambia@example.com"
+    gender: "M"
+    birthday: "1980-12-05"

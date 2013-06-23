@@ -1,0 +1,155 @@
+TODO LIST
+=========
+
+Model
+- Model::databaseName()
+
+Table
+- Table->columnAdd()
+- Table->columnRemove()
+- Table->indexes()
+- Table->indexAdd()
+- Table->indexRemove()
+
+Relationships
+- HasOne through
+- HasMany through
+
+Validation
+- Validation->validationUnique()
+- Validation->validationAlphabetic()
+- Validation->validationAlphanumeric()
+
+/* Tests */
+
+
+echo 'USERS: ' . PHP_EOL;
+$users = User::find()->select();
+echo $users->toCSV();
+echo PHP_EOL;
+
+echo 'USERS PER DEPARTMENT: ' . PHP_EOL;
+$users_in_department = User::countGroup('department_id');
+print_r($users_in_department);
+echo PHP_EOL;
+
+echo 'USERS: ' . PHP_EOL;
+$users = User::find()->select();
+print_r($users->collate('id', 'name'));
+print_r($users);
+echo PHP_EOL;
+
+echo 'FIRST USER:' . PHP_EOL;
+$user = User::first()->one();
+print_r($user);
+
+echo 'LAST USER:' . PHP_EOL;
+$user = User::last()->one();
+print_r($user);
+
+echo 'DELETE LAST USER:' . PHP_EOL;
+$user = User::last()->one();
+$user->delete();
+echo 'DONE';
+
+$users = User::find()->select();
+$departments = $users->relationship('department');
+foreach ($users as $user)
+{
+    echo (($user->department) ? $user->department->name : '') . ' : ' . $user->name . PHP_EOL;
+}
+echo PHP_EOL;
+
+$departments = Department::find()->select();
+$users = $departments->users();
+foreach ($departments as $department)
+{
+    echo $department->name . PHP_EOL;
+    foreach ($department->users as $user)
+    {
+        echo '  -> ' . $user->name . PHP_EOL;
+    }
+}
+echo PHP_EOL;
+
+//
+
+$user = User::first()->one();
+
+//
+
+echo 'FIELD (ENUM): ' . PHP_EOL;
+echo htmlentities($user->field(['name' => 'user[hair_color]'])) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'FIELD (STRING): ' . PHP_EOL;
+echo htmlentities($user->field(['name' => 'user[name]'])) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'JSON ENCODE: ' . PHP_EOL;
+echo json_encode($user);
+echo PHP_EOL;
+
+$user = new User;
+$user->name = 'bash';
+$user->hair_color = 'blonde';
+$user->is_opted_in_marketing = false;
+$user->save();
+print_r($user->_errors);
+//
+
+
+
+echo 'TRANSACTION:' . PHP_EOL;
+$name = 'New department name';
+$did_save = Department::transact(function() use($name) {
+    $department = new Department;
+    $department->name = $name;
+    $department->save();
+
+    throw new Exception('Deliberately called an exception');
+});
+
+
+
+
+
+echo 'NEW DEPARTMENT' . PHP_EOL;
+$department = new Department;
+$department->name = 'Demo Department';
+$department->save(); // insert
+$department->name = 'New Department';
+$department->save(); // update
+$department->delete(); // delete
+
+echo 'FILTER:' . PHP_EOL;
+
+$users = User::find()->select();
+$users->filter('department_id', 1);
+foreach ($users as $key => $value)
+{
+    echo '- ' . $value->name . PHP_EOL;
+}
+
+$data = User::find()->select()->collate('id', 'name');
+print_r($data);
+
+$user = new User;
+$user->name = 'First name';
+$user->email = 'em@il.com';
+$user->coupon = '12-ABC';
+$user->number_of_bananas = 9;
+$user->department_id = null;
+$user->hair_color = 'Brunette';
+$user->is_opted_in_marketing = 0;
+$user->profile = '';
+$user->birthday = null;
+$user->save();
+
+print_r($user);
+
+echo 'EXISTS:' . PHP_EOL;
+$has_user = User::exists([WHERE => 'name LIKE ?'], ['%F%']);
+echo ($has_user ? 'exists' : 'does not exist') . PHP_EOL;
+echo PHP_EOL;
+

@@ -1,0 +1,9 @@
+.DS_Store
+sniff/PSR1.xml
+sniff/PSR2.xml
+tests/oriancci.log
+vendor/
+composer.lock
+composer.phar
+phpunit.phar
+phpunit.xml
