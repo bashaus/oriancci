@@ -20,5 +20,5 @@
     },
     "suggest": {
         "monolog/monolog": "Enables log messaging through the PSR-3 standard"
-    },
+    }
 }
