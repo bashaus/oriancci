@@ -1,28 +1,29 @@
 #!/bin/bash
-#
-# PHP CodeSniffer pre-commit hook
 
-ROOT=`git rev-parse --show-toplevel`
+BASE="`dirname \"$0\"`" 
 
-OUTPUT=$(phpcs --standard=PSR1 --report=full $ROOT/src)
-RETURNED=$?
+PSR1_STDOUT=`$BASE/pre-commit/psr-1.sh`
+PSR1_RESULT=$?
+echo "$PSR1_STDOUT"
 
-if [ 0 -ne "$RETURNED" ] ; then
-    echo "There are PSR-1 code style issues."
-    echo "Please correct these before commiting."
-    echo "$OUTPUT"
-    exit $RETURNED
+PSR2_STDOUT=`$BASE/pre-commit/psr-2.sh`
+PSR2_RESULT=$?
+echo "$PSR2_STDOUT"
+
+JSON_STDOUT=`/usr/bin/env php $BASE/pre-commit/composer-json.php`
+JSON_RESULT=$?
+echo "$JSON_STDOUT"
+
+if [ 0 -ne "$PSR1_RESULT" ] ; then
+    exit 1
 fi
 
-OUTPUT=$(phpcs --standard=PSR2 --report=full $ROOT/src)
-RETURNED=$?
+if [ 0 -ne "$PSR2_RESULT" ] ; then
+    exit 1
+fi
 
-if [ 0 -ne "$RETURNED" ] ; then
-    echo "There are PSR-2 code style issues."
-    echo "Please correct these before commiting."
-    echo "$OUTPUT"
-    exit $RETURNED
+if [ 0 -ne "$JSON_RESULT" ] ; then
+    exit 1
 fi
 
 exit 0
-
