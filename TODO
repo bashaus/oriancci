@@ -1,9 +1,6 @@
 TODO LIST
 =========
 
-Model
-- Model::databaseName()
-
 Table
 - Table->columnAdd()
 - Table->columnRemove()
