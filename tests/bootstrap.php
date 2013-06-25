@@ -10,11 +10,11 @@ define('ORIANCCI_PHPUNIT_DIR_FIXTURES', __DIR__ . '/Oriancci/fixtures');
 $loader = require_once __DIR__ . '/../vendor/autoload.php';
 $loader->add('Oriancci\\', __DIR__);
 
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-
-$log = new Logger('Oriancci');
-$log->pushHandler(new StreamHandler('tests/oriancci.log'));
+$log = null;
+if (class_exists('Monolog\Logger')) {
+    $log = new Monolog\Logger('Oriancci');
+    $log->pushHandler(new Monolog\Handler\StreamHandler('tests/oriancci.log'));
+}
 
 $connection_manager = \Oriancci\ConnectionManager::getInstance();
 $connection_manager->build = [

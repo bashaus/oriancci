@@ -1,6 +1,6 @@
 {
     "name": "oriancci/oriancci",
-    "description": "A PSR and SPL ActiveRecord implement for PHP 5.4+",
+    "description": "A PSR and SPL ActiveRecord implementation for PHP 5.4+",
     "homepage": "http://github.com/bashaus/oriancci",
     "type": "library",
     "license": "MIT",
@@ -12,11 +12,13 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "psr/log": "~1.0",
-        "monolog/monolog": "1.6.*@dev"
+        "psr/log": "~1.0"
     },
     "autoload": {
         "files": [ "src/Oriancci/constants.php" ],
         "psr-0": {"Oriancci": "src/"}
-    }
+    },
+    "suggest": {
+        "monolog/monolog": "Enables log messaging through the PSR-3 standard"
+    },
 }
