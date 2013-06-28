@@ -56,14 +56,6 @@ $user = User::first()->one();
 
 //
 
-echo 'FIELD (ENUM): ' . PHP_EOL;
-echo htmlentities($user->field(['name' => 'user[hair_color]'])) . PHP_EOL;
-echo PHP_EOL;
-
-echo 'FIELD (STRING): ' . PHP_EOL;
-echo htmlentities($user->field(['name' => 'user[name]'])) . PHP_EOL;
-echo PHP_EOL;
-
 echo 'JSON ENCODE: ' . PHP_EOL;
 echo json_encode($user);
 echo PHP_EOL;
@@ -76,22 +68,6 @@ $user->save();
 print_r($user->_errors);
 //
 
-
-
-echo 'TRANSACTION:' . PHP_EOL;
-$name = 'New department name';
-$did_save = Department::transact(function() use($name) {
-    $department = new Department;
-    $department->name = $name;
-    $department->save();
-
-    throw new Exception('Deliberately called an exception');
-});
-
-
-
-
-
 echo 'NEW DEPARTMENT' . PHP_EOL;
 $department = new Department;
 $department->name = 'Demo Department';
@@ -100,34 +76,5 @@ $department->name = 'New Department';
 $department->save(); // update
 $department->delete(); // delete
 
-echo 'FILTER:' . PHP_EOL;
-
-$users = User::find()->select();
-$users->filter('department_id', 1);
-foreach ($users as $key => $value)
-{
-    echo '- ' . $value->name . PHP_EOL;
-}
-
 $data = User::find()->select()->collate('id', 'name');
 print_r($data);
-
-$user = new User;
-$user->name = 'First name';
-$user->email = 'em@il.com';
-$user->coupon = '12-ABC';
-$user->number_of_bananas = 9;
-$user->department_id = null;
-$user->hair_color = 'Brunette';
-$user->is_opted_in_marketing = 0;
-$user->profile = '';
-$user->birthday = null;
-$user->save();
-
-print_r($user);
-
-echo 'EXISTS:' . PHP_EOL;
-$has_user = User::exists([WHERE => 'name LIKE ?'], ['%F%']);
-echo ($has_user ? 'exists' : 'does not exist') . PHP_EOL;
-echo PHP_EOL;
-
