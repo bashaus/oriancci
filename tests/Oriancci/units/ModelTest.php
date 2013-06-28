@@ -184,4 +184,59 @@ class ModelTest extends OriancciTest
         $this->assertEquals('M'         , $user->gender);
         $this->assertEquals('1982-10-01', $user->birthday->format('Y-m-d'));
     }
+
+    /* instance - transaction */
+    public function testTransactionPass()
+    {
+        $saved = Department::transact(function() use($name) {
+            $user = new User([
+                'firstName' => 'Jamie', 
+                'lastName'  => 'Fino',
+                'email'     => 'em@il.com', 
+                'gender'    => 'M',
+                'birthday'  => '1982-10-01'
+            ]);
+            $user->save();
+
+            return true;
+        });
+
+        $this->assertTrue($saved);
+    }
+
+    public function testTransactionFail()
+    {
+        $saved = Department::transact(function() use($name) {
+            $user = new User([
+                'firstName' => 'Jamie', 
+                'lastName'  => 'Fino',
+                'email'     => 'em@il.com', 
+                'gender'    => 'M',
+                'birthday'  => '1982-10-01'
+            ]);
+            $user->save();
+
+            return false;
+        });
+
+        $this->assertFalse($saved);
+    }
+
+    public function testTransactionException()
+    {
+        $saved = Department::transact(function() use($name) {
+            $user = new User([
+                'firstName' => 'Jamie', 
+                'lastName'  => 'Fino',
+                'email'     => 'em@il.com', 
+                'gender'    => 'M',
+                'birthday'  => '1982-10-01'
+            ]);
+            $user->save();
+
+            throw new Exception('Test a failure');
+        });
+
+        $this->assertFalse($saved);
+    }
 }
