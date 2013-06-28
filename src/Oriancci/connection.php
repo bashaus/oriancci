@@ -36,7 +36,7 @@ abstract class Connection extends PDO implements LoggerAwareInterface
     }
 
     /* \Psr\Log\LoggerAwareInterface */
-    public function setLogger(\Psr\Log\LoggerInterface $logger)
+    public function setLogger(\Psr\Log\LoggerInterface $logger = null)
     {
         $this->logger = $logger;
     }
