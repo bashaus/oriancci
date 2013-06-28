@@ -188,7 +188,7 @@ class ModelTest extends OriancciTest
     /* instance - transaction */
     public function testTransactionPass()
     {
-        $saved = Department::transact(function() use($name) {
+        $saved = User::transact(function() {
             $user = new User([
                 'firstName' => 'Jamie', 
                 'lastName'  => 'Fino',
@@ -206,7 +206,7 @@ class ModelTest extends OriancciTest
 
     public function testTransactionFail()
     {
-        $saved = Department::transact(function() use($name) {
+        $saved = User::transact(function() {
             $user = new User([
                 'firstName' => 'Jamie', 
                 'lastName'  => 'Fino',
@@ -224,7 +224,7 @@ class ModelTest extends OriancciTest
 
     public function testTransactionException()
     {
-        $saved = Department::transact(function() use($name) {
+        $saved = User::transact(function() {
             $user = new User([
                 'firstName' => 'Jamie', 
                 'lastName'  => 'Fino',
@@ -234,7 +234,7 @@ class ModelTest extends OriancciTest
             ]);
             $user->save();
 
-            throw new Exception('Test a failure');
+            throw new \Exception('Test a failure');
         });
 
         $this->assertFalse($saved);
