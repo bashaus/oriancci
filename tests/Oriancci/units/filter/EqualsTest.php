@@ -2,12 +2,13 @@
 
 namespace Oriancci;
 
+use Oriancci\Models\User;
+
 class EqualsTest extends OriancciTest
 {
     
     public function testFilter()
     {
-        /*
         $users = User::find();
         $this->assertCount(13, $users);
 
@@ -15,15 +16,17 @@ class EqualsTest extends OriancciTest
             $this->assertInstanceOf('Oriancci\Models\User', $user);
         }
 
-        $users->filter('gender', 'M');
-        $this->assertCount(7, $users);
+        //
 
-        foreach ($users as $user) {
-            $this->assertEquals('M', $user->gender);
+        $males = new Filter\Equals($users, 'gender', 'M');
+        $females = new Filter\Equals($users, 'gender', 'F');
+
+        foreach ($males as $male) {
+            $this->assertEquals('M', $male->gender);
         }
 
-        $users->clearFilter();
-        $this->assertCount(13, $users);
-        */
+        foreach ($females as $female) {
+            $this->assertEquals('F', $female->gender);
+        }
     }
 }
