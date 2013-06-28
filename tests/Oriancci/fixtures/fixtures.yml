@@ -104,7 +104,7 @@ user:
     updatedAt: "2013-01-01 00:00:00"
     firstName: "Kevin"
     lastName: "Xray"
-    email: "gavin.xray@example.com"
+    email: "kevin.xray@example.com"
     gender: "M"
     birthday: "1980-12-05"
   -
