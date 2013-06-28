@@ -522,7 +522,7 @@ abstract class Model implements \JsonSerializable
      */
     public static function exists($sqlParameters = [], $sqlData = [])
     {
-        if (!array_key_exists(GROUP_BY, $sqlParameters)) {
+        if (array_key_exists(GROUP_BY, $sqlParameters)) {
             throw new \Exception('Cannot use GROUP_BY clause in exists query.');
         }
 

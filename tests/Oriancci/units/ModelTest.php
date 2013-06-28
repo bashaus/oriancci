@@ -40,6 +40,20 @@ class ModelTest extends OriancciTest
         $this->assertEquals(13, User::count());
     }
 
+    /* static - exists */
+
+    public function testExists()
+    {
+        $exists = User::exists([WHERE => 'gender = ?'], ['F']);
+        $this->assertTrue($exists);
+    }
+
+    public function testNotExists()
+    {
+        $exists = User::exists([WHERE => 'gender = ?'], ['X']);
+        $this->assertFalse($exists);
+    }
+
     /* static - getBy */
 
     public function testGetByMethodExists()
