@@ -2,21 +2,18 @@ department:
   -
     createdAt: "2013-01-01 00:00:00"
     updatedAt: "2013-01-01 00:00:00"
-    id: 1
     name: "Technical"
     lft: 1
     rgt: 6
   -
     createdAt: "2013-01-01 00:00:00"
     updatedAt: "2013-01-01 00:00:00"
-    id: 2
     name: "Front-end"
     lft: 2
     rgt: 3
   -
     createdAt: "2013-01-01 00:00:00"
     updatedAt: "2013-01-01 00:00:00"
-    id: 3
     name: "Back-end"
     lft: 4
     rgt: 5
