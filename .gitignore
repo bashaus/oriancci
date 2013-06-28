@@ -1,4 +1,5 @@
 .DS_Store
+tests/Oriancci/coverage
 tests/oriancci.log
 vendor/
 composer.lock
