@@ -8,9 +8,9 @@ abstract class Model implements \JsonSerializable
 
     const DEFAULT_AUTO_INCREMENT = 'id';
 
-    public static $accessible;
-    public static $foreignKeys;
-    public static $serializable;
+    public static $accessible = null;
+    public static $foreignKeys = [];
+    public static $serializable = null;
 
     public static $field = [];
     public static $validation = [];
@@ -20,15 +20,15 @@ abstract class Model implements \JsonSerializable
 
     public $errors;
 
-    public static $staticMethodHandlers = array(
+    public static $staticMethodHandlers = [
         'findBy'    => 'staticFind',
         'getBy'     => 'staticGet',
         'countBy'   => 'staticCount'
-    );
+    ];
 
     public function __construct(array $attributes = null)
     {
-        $this->errors = new Errors;
+        $this->errors = new Errors($this);
 
         $autoIncrementField = static::autoIncrementField();
         $autoIncrement = $this->autoIncrement();
@@ -175,6 +175,11 @@ abstract class Model implements \JsonSerializable
     public function assignAttribute($attributeName, $attributeValue)
     {
         $this->attributes[$attributeName] = $attributeValue;
+    }
+
+    public function getAttributes()
+    {
+        return $this->attributes;
     }
 
     public function setAttributes(array $attributes = [])
@@ -709,13 +714,11 @@ abstract class Model implements \JsonSerializable
     {
         $return = [];
 
-        foreach (static::$serializable as $attributeName => $attributeAvailable) {
-            if ($attributeAvailable) {
-                if ($this->{$attributeName} instanceof \JsonSerializable) {
-                    $return[$attributeName] = $this->{$attributeName}->jsonSerialize();
-                } else {
-                    $return[$attributeName] = $this->{$attributeName};
-                }
+        foreach ($this->getAttributes() as $key => $value) {
+            if (is_null(static::$serializable)) {
+                $return[$key] = $value;
+            } elseif (array_key_exists($key, static::$serializable) && static::$serializable[$key] == true) {
+                $return[$key] = $value;
             }
         }
 

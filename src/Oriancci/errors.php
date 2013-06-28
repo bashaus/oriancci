@@ -2,11 +2,14 @@
 
 namespace Oriancci;
 
-class Errors extends \ArrayObject
+class Errors extends \ArrayObject implements \JsonSerializable
 {
-    
-    public function __construct()
+
+    protected $model;
+
+    public function __construct(Model $model)
     {
+        $this->model = $model;
     }
 
     public function clear()
@@ -26,30 +29,15 @@ class Errors extends \ArrayObject
 
     public function clearByKey($clearKey, $clearValue)
     {
-        $toRemove = [];
-        
-        foreach ($this as $key => $error) {
-            if ($error->$clearKey == $clearValue) {
-                $toRemove[] = $key;
-            }
-        }
-
-        foreach ($toRemove as $key) {
+        $filter = new Filter\Equals($this, $clearKey, $clearValue);
+        foreach ($filter as $key => $object) {
             unset($this[$key]);
         }
     }
 
     public function on($field)
     {
-        $return = new Errors;
-
-        foreach ($this as $error) {
-            if ($error->field == $field) {
-                $return[] = $error;
-            }
-        }
-
-        return $return;
+        return new Filter\Equals('field', $field);
     }
 
     public function __toString()
@@ -61,5 +49,21 @@ class Errors extends \ArrayObject
         }
 
         return implode(', ', $errors);
+    }
+
+    /* JSON Serializable */
+    public function jsonSerialize()
+    {
+        $return = [];
+
+        foreach ($this as $key => $value) {
+            if ($value instanceof \JsonSerializable) {
+                $return[$key] = $value->jsonSerialize();
+            } else {
+                $return[$key] = $value;
+            }
+        }
+
+        return $return;
     }
 }

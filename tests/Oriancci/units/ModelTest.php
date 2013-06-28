@@ -24,10 +24,19 @@ class ModelTest extends OriancciTest
         $this->assertEquals(13, $users->count());
     }
 
-    public function testFindWhere()
+    public function testFindWhereNamed()
     {
         $findUsers = User::find([WHERE => 'gender = :gender']);
         $users = $findUsers->select([':gender' => 'M']);
+        
+        $this->assertInstanceOf('Oriancci\Result\Collection', $users);
+        $this->assertNotEquals(0, $users->count());
+    }
+
+    public function testFindWhereUnnamed()
+    {
+        $findUsers = User::find([WHERE => 'gender = ?']);
+        $users = $findUsers->select(['M']);
         
         $this->assertInstanceOf('Oriancci\Result\Collection', $users);
         $this->assertNotEquals(0, $users->count());
@@ -173,7 +182,7 @@ class ModelTest extends OriancciTest
             'lastName'  => 'Fino',
             'email'     => 'jamie.fino@example.com', 
             'gender'    => 'M',
-            'birthday'  => new \Oriancci\Datatype\Datetime('1982-10-01')
+            'birthday'  => '1982-10-01'
         ]);
 
         $this->assertTrue($user->save());
@@ -252,5 +261,26 @@ class ModelTest extends OriancciTest
         });
 
         $this->assertFalse($saved);
+    }
+
+    public function testJSON()
+    {
+        User::$serializable = array_fill_keys(
+            array('firstName', 'email', 'gender', 'birthday'),
+            true
+        );
+
+        $user = new User([
+            'firstName' => 'Jane',
+            'email'     => 'em@il.com',
+            'gender'    => 'F'
+        ]);
+
+        $this->assertEquals(
+            '{"firstName":"Jane","email":"em@il.com","gender":"F","birthday":null}',
+            json_encode($user)
+        );
+
+        User::$serializable = null;
     }
 }

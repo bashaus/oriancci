@@ -4,59 +4,22 @@ namespace Oriancci\Result;
 
 use Oriancci\Statement;
 
-class Collection extends \FilterIterator implements \ArrayAccess, \Countable, \JsonSerializable
+class Collection extends \ArrayObject implements \ArrayAccess, \Countable, \JsonSerializable
 {
 
-    private $filterField;
-    private $filterValue;
-    private $filterCount;
-
-    public $results;
     public $statement;
 
     public function __construct(Statement $statement = null)
     {
         $this->statement = $statement;
-        $this->results = new \ArrayObject;
 
         while ($object = $this->statement->query->fetch($this->statement)) {
-            $this->results->append($object);
+            $this->append($object);
         }
 
         $this->statement->closeCursor();
 
-        $this->clearFilter();
-
-        parent::__construct($this->results->getIterator());
-    }
-
-    /* FilterIterator */
-
-    public function filter($filterField = null, $filterValue = null)
-    {
-        $this->filterField = $filterField;
-        $this->filterValue = $filterValue;
-
-        $this->filterCount = 0;
-        foreach ($this as $object) {
-            ++$this->filterCount;
-        }
-    }
-
-    public function clearFilter()
-    {
-        $this->filterField = null;
-        $this->filterValue = null;
-        $this->filterCount = count($this->results);
-    }
-
-    public function accept()
-    {
-        if (is_null($this->filterField)) {
-            return true;
-        }
-
-        return $this->current()->{$this->filterField} == $this->filterValue;
+        parent::__construct();
     }
 
     /* Relationship */
@@ -82,7 +45,7 @@ class Collection extends \FilterIterator implements \ArrayAccess, \Countable, \J
             $keyFields = [$keyFields];
         }
 
-        foreach ($this->results as $row) {
+        foreach ($this as $row) {
             $resultRow =& $results;
 
             foreach ($keyFields as $keyField) {
@@ -108,42 +71,6 @@ class Collection extends \FilterIterator implements \ArrayAccess, \Countable, \J
         }
 
         return $return;
-    }
-
-    /* ArrayAccess */
-
-    public function offsetExists($offset)
-    {
-        return array_key_exists($offset, $this->results);
-    }
-
-    public function offsetGet($offset)
-    {
-        return $this->results[$offset];
-    }
-
-    /**
-     * You cannot alter the value of a result
-     * Consequentially, this method does nothing
-     */
-    public function offsetSet($offset, $value)
-    {
-        throw new \Exception('You cannot alter the value of a result');
-    }
-
-    /**
-     * You cannot alter the value of a result
-     * Consequentially, this method does nothing
-     */
-    public function offsetUnset($offset)
-    {
-        throw new \Exception('You cannot alter the value of a result');
-    }
-
-    /* Countable */
-    public function count()
-    {
-        return $this->filterCount;
     }
 
     /* Serialization */
@@ -188,7 +115,7 @@ class Collection extends \FilterIterator implements \ArrayAccess, \Countable, \J
     {
         $return = [];
 
-        foreach ($this->results as $key => $value) {
+        foreach ($this as $key => $value) {
             if ($value instanceof \JsonSerializable) {
                 $return[$key] = $value->jsonSerialize();
             } else {
