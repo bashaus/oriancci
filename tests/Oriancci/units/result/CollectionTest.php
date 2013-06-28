@@ -91,6 +91,10 @@ class CollectionTest extends OriancciTest
         $users->filter('gender', 'M');
         $this->assertCount(7, $users);
 
+        foreach ($users as $user) {
+            $this->assertEquals('M', $user->gender);
+        }
+
         $users->clearFilter();
         $this->assertCount(13, $users);
     }
