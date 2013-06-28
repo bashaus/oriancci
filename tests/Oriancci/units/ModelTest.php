@@ -82,6 +82,48 @@ class ModelTest extends OriancciTest
         $this->assertEquals(6, $usersByGender['F']);
     }
 
+    /* static - first */
+
+    public function testFirst()
+    {
+        $user = User::first();
+        $this->assertInstanceOf('Oriancci\Models\User', $user);
+    }
+
+    public function testFirstWithParameters()
+    {
+        $user = User::first([WHERE => 'gender = ?'], ['F']);
+        $this->assertInstanceOf('Oriancci\Models\User', $user);
+        $this->assertEquals('F', $user->gender);
+    }
+
+    public function testFirstNotFound()
+    {
+        $user = User::first([WHERE => 'gender = ?'], ['?']);
+        $this->assertFalse($user);
+    }
+
+    /* static - last */
+
+    public function testLast()
+    {
+        $user = User::last();
+        $this->assertInstanceOf('Oriancci\Models\User', $user);
+    }
+
+    public function testLastWithParameters()
+    {
+        $user = User::last([WHERE => 'gender = ?'], ['F']);
+        $this->assertInstanceOf('Oriancci\Models\User', $user);
+        $this->assertEquals('F', $user->gender);
+    }
+
+    public function testLastNotFound()
+    {
+        $user = User::last([WHERE => 'gender = ?'], ['?']);
+        $this->assertFalse($user);
+    }
+
     /* instance - save */
 
     public function testSaveInsert()

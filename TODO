@@ -25,25 +25,6 @@ $users = User::find()->select();
 echo $users->toCSV();
 echo PHP_EOL;
 
-echo 'USERS PER DEPARTMENT: ' . PHP_EOL;
-$users_in_department = User::countGroup('department_id');
-print_r($users_in_department);
-echo PHP_EOL;
-
-echo 'USERS: ' . PHP_EOL;
-$users = User::find()->select();
-print_r($users->collate('id', 'name'));
-print_r($users);
-echo PHP_EOL;
-
-echo 'FIRST USER:' . PHP_EOL;
-$user = User::first()->one();
-print_r($user);
-
-echo 'LAST USER:' . PHP_EOL;
-$user = User::last()->one();
-print_r($user);
-
 echo 'DELETE LAST USER:' . PHP_EOL;
 $user = User::last()->one();
 $user->delete();

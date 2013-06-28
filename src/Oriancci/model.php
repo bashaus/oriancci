@@ -486,7 +486,7 @@ abstract class Model implements \JsonSerializable
     /**
      * Gets the first row in a query
      */
-    public static function first($sqlParameters = [])
+    public static function first(array $sqlParameters = [], array $sqlData = [])
     {
         if (!array_key_exists(ORDER_BY, $sqlParameters)) {
             $sqlParameters[ORDER_BY] = [static::autoIncrementField() => ASC];
@@ -496,13 +496,13 @@ abstract class Model implements \JsonSerializable
         $sqlParameters[OFFSET] = 0;
         unset($sqlParameters[PAGE]);
 
-        return static::table()->select($sqlParameters);
+        return static::table()->select($sqlParameters)->one($sqlData);
     }
 
     /**
      * Gets the last row in a query
      */
-    public static function last($sqlParameters = [])
+    public static function last(array $sqlParameters = [], array $sqlData = [])
     {
         if (!array_key_exists(ORDER_BY, $sqlParameters)) {
             $sqlParameters[ORDER_BY] = [static::autoIncrementField() => DESC];
@@ -514,7 +514,7 @@ abstract class Model implements \JsonSerializable
         $sqlParameters[OFFSET] = 0;
         unset($sqlParameters[PAGE]);
 
-        return static::table()->select($sqlParameters);
+        return static::table()->select($sqlParameters)->one($sqlData);
     }
 
     /**
