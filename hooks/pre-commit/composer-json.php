@@ -1,7 +1,7 @@
 <?php
 
-$root = `git rev-parse --show-toplevel`;
-$file = realpath(trim($root) . '/composer.json');
+$root = trim(`git rev-parse --show-toplevel`);
+$file = realpath($root . '/composer.json');
 
 if (!$file) {
     echo "Could not open composer.json for interpreting." . PHP_EOL;

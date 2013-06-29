@@ -1,10 +1,9 @@
 #!/bin/bash
-#
-# PHP CodeSniffer pre-commit hook
 
 ROOT=`git rev-parse --show-toplevel`
+cd "$ROOT"
 
-OUTPUT=$(phpcs --standard=PSR1 --report=full $ROOT/src)
+OUTPUT=$(phpcs --standard=PSR1 --report=full ./src)
 RETURNED=$?
 
 if [ 0 -ne "$RETURNED" ] ; then
