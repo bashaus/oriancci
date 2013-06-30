@@ -2,7 +2,7 @@
 
 namespace Oriancci\Relationship;
 
-class HasMany extends Relationship
+class HasMany extends \Oriancci\Relationship
 {
 
     public function result($resultsIn, $resultsOut)

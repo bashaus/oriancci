@@ -1,6 +1,6 @@
 <?php
 
-namespace Oriancci\Relationship;
+namespace Oriancci;
 
 abstract class Relationship
 {

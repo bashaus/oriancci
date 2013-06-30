@@ -11,10 +11,10 @@ if (!@include __DIR__ . '/../vendor/autoload.php') {
 You must set up the project dependencies, run the following commands:
 wget http://getcomposer.org/composer.phar
 php composer.phar install
+
 EOT
     );
 }
-
 
 require __DIR__ . '/Oriancci/models/department.php';
 require __DIR__ . '/Oriancci/models/user.php';
