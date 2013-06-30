@@ -15,7 +15,7 @@ require __DIR__ . '/Oriancci/models/user.php';
 $log = null;
 if (class_exists('Monolog\Logger')) {
     $log = new Monolog\Logger('Oriancci');
-    $log->pushHandler(new Monolog\Handler\StreamHandler('tests/oriancci.log'));
+    $log->pushHandler(new Monolog\Handler\StreamHandler(realpath(__DIR__ . '/oriancci.log')));
 }
 
 $connection_manager = \Oriancci\ConnectionManager::getInstance();
