@@ -85,7 +85,7 @@ abstract class Model implements \JsonSerializable
 
     public static function connection()
     {
-        return ConnectionManager::getInstance()->get(static::connectionName());
+        return ConnectionManager::getInstance()->connect(static::connectionName());
     }
 
     public static function connectionName()
