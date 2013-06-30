@@ -8,6 +8,10 @@
         {
             "name": "Bashkim Isai",
             "homepage": "http://bashkim.com.au"
+        },
+        {
+            "name": "Contributors",
+            "homepage": "https://github.com/bashaus/oriancci/contributors"
         }
     ],
     "require": {
