@@ -201,7 +201,7 @@ abstract class Model implements \JsonSerializable
         return true;
     }
 
-    /* abstract */ 
+    /* abstract */
     public function validate()
     {
     }
