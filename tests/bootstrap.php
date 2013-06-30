@@ -6,7 +6,15 @@ require __DIR__ . '/Oriancci/units/OriancciTest.php';
 
 define('ORIANCCI_PHPUNIT_DIR_FIXTURES', __DIR__ . '/Oriancci/fixtures');
 
-$loader = require_once __DIR__ . '/../vendor/autoload.php';
+if (!@include __DIR__ . '/../vendor/autoload.php') {
+    die(<<<'EOT'
+You must set up the project dependencies, run the following commands:
+wget http://getcomposer.org/composer.phar
+php composer.phar install
+EOT
+    );
+}
+
 
 require __DIR__ . '/Oriancci/models/department.php';
 require __DIR__ . '/Oriancci/models/user.php';
