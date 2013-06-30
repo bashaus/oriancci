@@ -4,11 +4,16 @@ php:
   - 5.4
 
 before_script:
-  - wget --quiet http://getcomposer.org/composer.phar
-  - php composer.phar install
+  # PHP Unit (with database)
+  - wget http://pear.phpunit.de/get/phpunit.phar
+  - chmod +x phpunit.phar
   - cp phpunit.xml.dist phpunit.xml
   - mysql -e 'CREATE DATABASE oriancci_build;'
 
+  # Composer
+  - wget --quiet http://getcomposer.org/composer.phar
+  - php composer.phar install
+
 env: ORIANCCI_PHPUNIT_HOSTTYPE=mysql ORIANCCI_PHPUNIT_HOSTNAME=127.0.0.1 ORIANCCI_PHPUNIT_USERNAME=root ORIANCCI_PHPUNIT_PASSWORD= ORIANCCI_PHPUNIT_DATABASE=oriancci_build
 
-script: phpunit tests/
+script: php phpunit.phar tests/
