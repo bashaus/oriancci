@@ -2,7 +2,7 @@
 
 namespace Oriancci;
 
-class Table
+abstract class Table
 {
     use Traits\Factory;
 
@@ -14,18 +14,8 @@ class Table
     private function __construct($modelName)
     {
         $this->modelName = $modelName;
-
-        // Get column data
         $this->columns();
-
-        // Get index data
         $this->indexes();
-    }
-
-    public function connectionName()
-    {
-        $modelName = $this->modelName;
-        return $modelName::connectionName();
     }
 
     /* DB helpers */
@@ -60,17 +50,17 @@ class Table
 
     /* Schema */
 
+    abstract public function describe();
+    abstract public function getColumnClass();
+
     public function columns()
     {
         if (is_null($this->columns)) {
             $this->columns = [];
 
-            $connection = ConnectionManager::getInstance()->get($this->connectionName());
-            $query = $connection->query(
-                $connection->sqlDescribeTable($this->tableFullName())
-            );
+            $query = $this->describe();
 
-            while ($column = $query->fetchObject($connection->getColumnClass())) {
+            while ($column = $query->fetchObject($this->getColumnClass())) {
                 $this->columns[$column->getName()] = $column;
             }
         }
@@ -80,7 +70,8 @@ class Table
 
     public function column($columnName)
     {
-        return array_key_exists($columnName, $this->columns) ? $this->columns[$columnName] : null;
+        $columns = $this->columns();
+        return array_key_exists($columnName, $columns) ? $columns[$columnName] : null;
     }
 
     public function indexes()

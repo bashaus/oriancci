@@ -5,12 +5,12 @@ namespace Oriancci\Traits;
 trait Factory
 {
     
-    private static $instances = [];
+    protected static $instances = [];
 
     public static function factory($name)
     {
         if (!array_key_exists($name, static::$instances)) {
-            $className = __CLASS__;
+            $className = get_called_class();
             static::$instances[$name] = new $className($name);
         }
 

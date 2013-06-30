@@ -20,7 +20,7 @@ class Statement extends \PDOStatement
     public function execute($sqlData = [])
     {
         foreach ($sqlData as $dataKey => $dataValue) {
-            if (is_object($dataValue) && method_exists($dataValue, 'toDB')) {
+            if ($dataValue instanceof DataType\DataTypeInterface) {
                 $sqlData[$dataKey] = $dataValue->toDB();
             }
         }

@@ -115,6 +115,5 @@ abstract class Connection extends PDO implements LoggerAwareInterface
     /* Abstract */
 
     abstract public function setEncoding($charset);
-    abstract public function sqlDescribeTable($tableName);
-    abstract public function getColumnClass();
+    abstract public function getTableClass();
 }

@@ -103,7 +103,8 @@ abstract class Model implements \JsonSerializable
 
     public static function table()
     {
-        return Table::factory(get_called_class());
+        $tableClass = static::connection()->getTableClass();
+        return $tableClass::factory(get_called_class());
     }
 
     public static function tableName()

@@ -25,13 +25,8 @@ class Connection extends \Oriancci\Connection
         // Does not exist with sqlite
     }
 
-    public function sqlDescribeTable($tableName)
+    public function getTableClass()
     {
-        return 'PRAGMA table_info([' . $tableName . '])';
-    }
-
-    public function getColumnClass()
-    {
-        return 'Oriancci\Drivers\SQLite\Column';
+        return 'Oriancci\Drivers\MySQL\Table';
     }
 }

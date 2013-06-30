@@ -5,9 +5,8 @@ namespace Oriancci\Drivers\MySQL;
 class Connection extends \Oriancci\Connection
 {
 
-    const DEFAULT_HOST_NAME   = 'locahost';
-    const DEFAULT_HOST_PORT   = 3306;
-    const DEFAULT_DATABASE    = '/';
+    const DEFAULT_HOST_NAME = 'locahost';
+    const DEFAULT_HOST_PORT = 3306;
 
     public function __construct($connection)
     {
@@ -39,13 +38,8 @@ class Connection extends \Oriancci\Connection
         $this->charset = $charset;
     }
 
-    public function sqlDescribeTable($tableName)
+    public function getTableClass()
     {
-        return 'DESCRIBE ' . $tableName;
-    }
-
-    public function getColumnClass()
-    {
-        return 'Oriancci\Drivers\MySQL\Column';
+        return 'Oriancci\Drivers\MySQL\Table';
     }
 }
