@@ -18,9 +18,11 @@
         <const name="ORIANCCI_PHPUNIT_DATABASE" value="" />
     </php>-->
 
-    <testsuite name="Oriancci Test Suite">
-        <directory>tests/Oriancci</directory>
-    </testsuite>
+    <testsuites>
+        <testsuite name="Oriancci Test Suite">
+            <directory>tests/Oriancci</directory>
+        </testsuite>
+    </testsuites>
 
     <filter>
         <whitelist>
