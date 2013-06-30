@@ -12,7 +12,7 @@ class Table extends \Oriancci\Table
         return $connection->query('DESCRIBE ' . $this->tableFullName());
     }
 
-    public function getColumnClass()
+    public function columnClass()
     {
         return 'Oriancci\Drivers\MySQL\Column';
     }

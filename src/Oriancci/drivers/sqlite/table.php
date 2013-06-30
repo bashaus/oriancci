@@ -12,7 +12,7 @@ class Table extends \Oriancci\Table
         return $connection->query('PRAGMA table_info([' . $this->tableFullName() . '])');
     }
     
-    public function getColumnClass()
+    public function columnClass()
     {
         return 'Oriancci\Drivers\SQLite\Column';
     }

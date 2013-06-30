@@ -25,7 +25,7 @@ class Connection extends \Oriancci\Connection
         // Does not exist with sqlite
     }
 
-    public function getTableClass()
+    public function tableClass()
     {
         return 'Oriancci\Drivers\SQLite\Table';
     }

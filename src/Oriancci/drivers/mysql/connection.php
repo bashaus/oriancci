@@ -38,7 +38,7 @@ class Connection extends \Oriancci\Connection
         $this->charset = $charset;
     }
 
-    public function getTableClass()
+    public function tableClass()
     {
         return 'Oriancci\Drivers\MySQL\Table';
     }

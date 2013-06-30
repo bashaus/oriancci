@@ -51,7 +51,7 @@ abstract class Table
     /* Schema */
 
     abstract public function describe();
-    abstract public function getColumnClass();
+    abstract public function columnClass();
 
     public function columns()
     {
@@ -60,7 +60,7 @@ abstract class Table
 
             $query = $this->describe();
 
-            while ($column = $query->fetchObject($this->getColumnClass())) {
+            while ($column = $query->fetchObject($this->columnClass())) {
                 $this->columns[$column->getName()] = $column;
             }
         }
