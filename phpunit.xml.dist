@@ -11,11 +11,11 @@
          testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader">
 
     <!--<php>
-        <const name="ORIANCCI_PHPUNIT_HOSTTYPE" value="mysql" />
-        <const name="ORIANCCI_PHPUNIT_HOSTNAME" value="localhost" />
-        <const name="ORIANCCI_PHPUNIT_USERNAME" value="" />
-        <const name="ORIANCCI_PHPUNIT_PASSWORD" value="" />
-        <const name="ORIANCCI_PHPUNIT_DATABASE" value="" />
+        <env name="ORIANCCI_PHPUNIT_HOSTTYPE" value="mysql" />
+        <env name="ORIANCCI_PHPUNIT_HOSTNAME" value="localhost" />
+        <env name="ORIANCCI_PHPUNIT_USERNAME" value="" />
+        <env name="ORIANCCI_PHPUNIT_PASSWORD" value="" />
+        <env name="ORIANCCI_PHPUNIT_DATABASE" value="" />
     </php>-->
 
     <testsuites>
