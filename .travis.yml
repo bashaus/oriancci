@@ -5,9 +5,7 @@ php:
 
 before_script:
   # PHP Unit (with database)
-  - wget http://pear.phpunit.de/get/phpunit.phar
-  - chmod +x phpunit.phar
-  - cp phpunit.xml.dist phpunit.xml
+  - pear install phpunit/DbUnit
 
   # Database
   - mysql -e 'CREATE DATABASE oriancci_build;'
