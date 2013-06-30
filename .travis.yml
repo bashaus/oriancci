@@ -6,7 +6,6 @@ php:
 before_script:
   # PHP Unit (with database)
   - pear config-set auto_discover 1
-  - pear install pear.phpunit.de/PHPUnit
   - pear install phpunit/DbUnit
 
   # Database
@@ -17,4 +16,4 @@ before_script:
 
 env: ORIANCCI_PHPUNIT_HOSTTYPE=mysql ORIANCCI_PHPUNIT_HOSTNAME=127.0.0.1 ORIANCCI_PHPUNIT_USERNAME=root ORIANCCI_PHPUNIT_PASSWORD= ORIANCCI_PHPUNIT_DATABASE=oriancci_build
 
-script: php phpunit.phar tests/
+script: phpunit tests/
