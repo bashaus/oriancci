@@ -116,13 +116,13 @@ abstract class Column
                 return $this->validateBoolean($value);
             break;
             case self::SIMPLE_TYPE_DATE:
-                return $this->validateDatetime($value);
+                return $this->validateDateTime($value);
             break;
             case self::SIMPLE_TYPE_TIME:
-                return $this->validateDatetime($value);
+                return $this->validateDateTime($value);
             break;
             case self::SIMPLE_TYPE_DATETIME:
-                return $this->validateDatetime($value);
+                return $this->validateDateTime($value);
             break;
             case self::SIMPLE_TYPE_ENUM:
                 return $this->validateEnum($value);
@@ -166,7 +166,7 @@ abstract class Column
         }
     }
 
-    public function validateDatetime($value)
+    public function validateDateTime($value)
     {
         if ($value->hasErrors()) {
             return $value->getErrors();

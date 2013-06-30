@@ -4,7 +4,7 @@ namespace Oriancci\DataType;
 
 use Oriancci\Error;
 
-class Datetime extends \DateTime implements \JsonSerializable, DataTypeInterface
+class DateTime extends \DateTime implements \JsonSerializable, DataTypeInterface
 {
     use DataType;
 
@@ -184,7 +184,7 @@ class Datetime extends \DateTime implements \JsonSerializable, DataTypeInterface
             return null;
         }
 
-        if ($datetime2 instanceof Datetime && $datetime2->isNull()) {
+        if ($datetime2 instanceof DateTime && $datetime2->isNull()) {
             return null;
         }
 

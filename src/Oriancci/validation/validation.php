@@ -247,7 +247,7 @@ class Validation
         }
 
         // Get the date value
-        $datetime = $value->toDatetime();
+        $datetime = $value->toDateTime();
 
         // Like all validation, if is null, return true (will be cause by required)
         if (is_null($datetime)) {
