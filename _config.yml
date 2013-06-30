@@ -2,4 +2,4 @@ safe: true
 lsi: false
 pygments: true
 
-url: http://bashaus.github.io/oriancci
+permalink: pretty
