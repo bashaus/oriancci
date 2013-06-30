@@ -16,6 +16,7 @@ before_script:
 
   # Database
   - mysql -e 'CREATE DATABASE oriancci_build;'
+  - mysql oriancci_build < tests/Oriancci/fixtures/schema.sql
 
   # Composer
   - composer install
