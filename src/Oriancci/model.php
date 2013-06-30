@@ -162,6 +162,7 @@ abstract class Model implements \JsonSerializable
 
     public static function primaryKeyAsWhere()
     {
+        return sprintf('%1$s = :%1$s', static::autoIncrementField());
     }
 
     /* Attributes */
@@ -280,14 +281,16 @@ abstract class Model implements \JsonSerializable
 
         // Insert
         $statement = static::table()->insert($sqlParameters);
-        if (!$statement->execute($sqlData)) {
+        $id = $statement->insert($sqlData);
+
+        if (!$id) {
             return false;
         }
 
         // Save the auto increment
         $autoIncrementField = static::autoIncrementField();
         if (!is_null($autoIncrementField)) {
-            $this->{$autoIncrementField} = $statement->connection->lastInsertId();
+            $this->{$autoIncrementField} = $id;
         }
 
         $this->eventDispatch('afterInsert');
@@ -323,9 +326,8 @@ abstract class Model implements \JsonSerializable
         // Update
         $statement = static::table()->update($sqlParameters);
         $sqlData = $this->toArray();
-        $statement->execute($sqlData);
 
-        if ($statement->rowCount() != 1) {
+        if ($statement->update($sqlData) != 1) {
             return false;
         }
         
@@ -341,19 +343,14 @@ abstract class Model implements \JsonSerializable
             return false;
         }
 
-        if (count($this->primaryKeyAsWhere()) == 0) {
-            return false;
-        }
-
         $sqlParameters = [
             WHERE => $this->primaryKeyAsWhere(),
             LIMIT => 1
         ];
 
         $statement = static::table()->delete($sqlParameters);
-        $statement->execute([$this->primaryKey()]);
-
-        if ($statement->rowCount() != 1) {
+        $sqlData = [':' . static::autoIncrementField() => $this->autoIncrement()];
+        if ($statement->delete($sqlData) != 1) {
             return false;
         }
 

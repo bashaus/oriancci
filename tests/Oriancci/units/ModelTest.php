@@ -175,6 +175,13 @@ class ModelTest extends OriancciTest
         $this->assertEquals($rows, $this->getConnection()->getRowCount(User::tableName()));
     }
 
+    public function testDelete()
+    {
+        $user = User::get(1);
+        $this->assertTrue($user->delete());
+        $this->assertEquals(0, $this->getConnection()->getRowCount('user', 'id = 1'));
+    }
+
     public function testSaveAutoIncrement()
     {
         $user = new User([

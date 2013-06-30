@@ -55,19 +55,28 @@ class Statement extends \PDOStatement
 
     public function insert($sqlData = [])
     {
-        $this->execute($sqlData);
+        if (!$this->execute($sqlData)) {
+            return false;
+        }
+        
         return $this->connection->lastInsertId();
     }
 
     public function update($sqlData = [])
     {
-        $this->execute($sqlData);
+        if (!$this->execute($sqlData)) {
+            return false;
+        }
+        
         return $this->rowCount();
     }
 
     public function delete($sqlData = [])
     {
-        $this->execute($sqlData);
+        if (!$this->execute($sqlData)) {
+            return false;
+        }
+        
         return $this->rowCount();
     }
 
