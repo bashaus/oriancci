@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% if page.title != "" %} {{ page.title }} | {% endif %} Oriancci</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="{{ site.url }}/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ site.url }}/assets/css/oriancci.css" rel="stylesheet">
+    <link href="{{ site.url }}/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Oriancci</a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+              <a href="//travis-ci.org/bashaus/oriancci">
+                <img src="//travis-ci.org/bashaus/oriancci.png?branch=master" alt="Travis CI Build Status" />
+              </a>
+            </p>
+            <ul class="nav">
+              <li class="active"><a href="{{ site.url }}/">Documentation</a></li>
+              <li><a href="//github.com/bashaus/oriancci">GitHub</a></li>
+              <li><a href="//github.com/bashaus/oriancci/graphs/contributors">Contributors</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          
+          <div class="download-links">
+            <div class="navbar">
+              <div class="navbar-inner">
+                <div class="container">
+                  <ul class="nav">
+                    <li><a href="//github.com/bashaus/oriancci/zipball/master">ZIP File</a></li>
+                    <li><a href="//github.com/bashaus/oriancci/tarball/master">TAR Ball</a></li>
+                    <li><a href="//github.com/bashaus/oriancci">GitHub</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="{% if page.slug == "home" %}active{% endif %}">
+                <a href="{{ site.url }}/index.html">Home</a>
+              </li>
+
+              <li class="nav-header">Setup</li>
+              <li class="{% if page.slug == "installation" %}active{% endif %}">
+                <a href="{{ site.url }}/docs/installation.html">Installation</a>
+              </li>
+              <li class="{% if page.slug == "connection" %}active{% endif %}">
+                <a href="{{ site.url }}/docs/connection.html">Connection</a>
+              </li>
+
+              <li class="nav-header">Usage</li>
+              <li class="{% if page.slug == "conventions" %}active{% endif %}">
+                <a href="{{ site.url }}/docs/conventions.html">Conventions</a>
+              </li>
+              <li class="{% if page.slug == "manipulating" %}active{% endif %}">
+                <a href="{{ site.url }}/docs/manipulating.html">Manipulating</a>
+              </li>
+              <li class="{% if page.slug == "querying" %}active{% endif %}">
+                <a href="{{ site.url }}/docs/querying.html">Querying</a>
+              </li>
+              <li class="{% if page.slug == "results" %}active{% endif %}">
+                <a href="{{ site.url }}/docs/results.html">Results</a>
+              </li>
+              <li class="{% if page.slug == "events" %}active{% endif %}">
+                <a href="{{ site.url }}/docs/events.html">Events</a>
+              </li>
+
+              <li class="nav-header">Other</li>
+              <li><a href="https://github.com/bashaus/oriancci/blob/master/LICENSE">License</a></li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
+          {{ content }}
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; Bashkim Isai, 2013</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+    <!-- Google analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-42134519-1', 'bashaus.github.io');
+      ga('send', 'pageview');
+
+    </script>
+  </body>
+</html>
