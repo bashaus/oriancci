@@ -7,7 +7,10 @@ require __DIR__ . '/Oriancci/units/OriancciTest.php';
 define('ORIANCCI_PHPUNIT_DIR_FIXTURES', __DIR__ . '/Oriancci/fixtures');
 
 $loader = require_once __DIR__ . '/../vendor/autoload.php';
-$loader->add('Oriancci\\', __DIR__);
+$loader->add('Oriancci\\', __DIR__ . '../src');
+
+require __DIR__ . '/Oriancci/models/department.php';
+require __DIR__ . '/Oriancci/models/user.php';
 
 $log = null;
 if (class_exists('Monolog\Logger')) {
