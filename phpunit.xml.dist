@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="tests/bootstrap.php" colors="true">
+<phpunit bootstrap="tests/bootstrap.php" colors="true" strict="true">
     <php>
         <const name="ORIANCCI_PHPUNIT_HOSTTYPE" value="mysql" />
         <const name="ORIANCCI_PHPUNIT_HOSTNAME" value="localhost" />
@@ -8,15 +8,17 @@
         <const name="ORIANCCI_PHPUNIT_DATABASE" value="" />
     </php>
 
-    <testsuites>
-        <testsuite name="Oriancci">
-            <directory>tests/Oriancci/units/</directory>
-        </testsuite>
-    </testsuites>
+    <testsuite name="Oriancci Test Suite">
+        <directory>tests/Oriancci</directory>
+    </testsuite>
 
     <filter>
         <whitelist>
-            <directory suffix=".php">src/Oriancci/</directory>
         </whitelist>
     </filter>
+
+    <logging>
+        <log type="coverage-html" target="tests/Oriancci/coverage" charset="UTF-8"
+            yui="false" highlight="true" lowUpperBound="60" highLowerBound="90" />
+    </logging>
 </phpunit>
