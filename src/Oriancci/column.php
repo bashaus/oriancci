@@ -193,6 +193,6 @@ abstract class Column
 
     private function errorGenerate($code)
     {
-        return new Error(['code' => $code, 'field' => $this->getName(), 'isAutomated' => true]);
+        return new Error(['code' => $code, 'field' => $this->getName()]);
     }
 }

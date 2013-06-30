@@ -8,14 +8,12 @@ class Error
     public static $accessible = [
         'field'         => true,
         'code'          => true,
-        'message'       => true,
-        'isAutomated'   => true
+        'message'       => true
     ];
 
     public $field;
     public $code;
     public $message;
-    public $isAutomated = false;
 
     public function __construct($attributes)
     {

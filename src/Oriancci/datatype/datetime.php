@@ -355,7 +355,7 @@ class DateTime extends \DateTime implements \JsonSerializable, DataTypeInterface
      */
     protected function errorGenerate($code)
     {
-        $error = new Error(['code' => $code, 'isAutomated' => true]);
+        $error = new Error(['code' => $code]);
         $this->errors[] = $error;
 
         return false;
@@ -425,8 +425,8 @@ class DateTime extends \DateTime implements \JsonSerializable, DataTypeInterface
 
     protected function updateInput()
     {
-        // $this->errors->clearAutomated();
-        $this->errors = [];
+        // $this->errors->clear();
+        $this->resetErrors();
         $this->input = $this->toArray();
     }
 

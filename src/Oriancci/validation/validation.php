@@ -278,6 +278,6 @@ class Validation
     // Error
     public static function errorGenerate($code)
     {
-        return new \Oriancci\Error(['code' => $code, 'isAutomated' => true]);
+        return new \Oriancci\Error(['code' => $code]);
     }
 }

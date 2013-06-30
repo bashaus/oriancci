@@ -201,9 +201,14 @@ abstract class Model implements \JsonSerializable
         return true;
     }
 
+    /* abstract */ 
     public function validate()
     {
-        $this->errors->clearAutomated();
+    }
+
+    protected function validation()
+    {
+        $this->errors->clear();
 
         // Loop through each column and validate their type
         foreach (static::table()->columns() as $column) {
@@ -231,11 +236,13 @@ abstract class Model implements \JsonSerializable
                 $this->errors[] = $error;
             }
         }
+
+        $this->validate();
     }
 
     public function isValid()
     {
-        $this->validate();
+        $this->validation();
         return $this->errors->count() == 0;
     }
 

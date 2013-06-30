@@ -17,16 +17,6 @@ class Errors extends \ArrayObject implements \JsonSerializable
         $this->exchangeArray([]);
     }
 
-    public function clearAutomated()
-    {
-        $this->clearByKey('isAutomated', true);
-    }
-
-    public function clearNonAutomated()
-    {
-        $this->clearByKey('isAutomated', false);
-    }
-
     public function clearByKey($clearKey, $clearValue)
     {
         $filter = new Filter\Equals($this, $clearKey, $clearValue);
