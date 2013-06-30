@@ -2,7 +2,6 @@
 
 ini_set('date.timezone', 'UTC');
 
-//require __DIR__ . '/../src/Oriancci/constants.php';
 require __DIR__ . '/Oriancci/units/OriancciTest.php';
 
 define('ORIANCCI_PHPUNIT_DIR_FIXTURES', __DIR__ . '/Oriancci/fixtures');
