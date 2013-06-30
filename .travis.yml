@@ -7,5 +7,13 @@ before_script:
   - wget --quiet http://getcomposer.org/composer.phar
   - php composer.phar install
   - cp phpunit.xml.dist phpunit.xml
+  - mysql -e 'CREATE DATABASE oriancci_build;'
 
-script: sudo phpunit --coverage-text
+env:
+  - ORIANCCI_PHPUNIT_HOSTTYPE=mysql
+  - ORIANCCI_PHPUNIT_HOSTNAME=127.0.0.1
+  - ORIANCCI_PHPUNIT_USERNAME=root
+  - ORIANCCI_PHPUNIT_PASSWORD=
+  - ORIANCCI_PHPUNIT_DATABASE=oriancci_build
+
+script: phpunit tests/

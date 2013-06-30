@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="tests/bootstrap.php" colors="true" strict="true">
-    <php>
+<phpunit bootstrap="./tests/bootstrap.php"
+         colors="true"
+         strict="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader">
+
+    <!--<php>
         <const name="ORIANCCI_PHPUNIT_HOSTTYPE" value="mysql" />
         <const name="ORIANCCI_PHPUNIT_HOSTNAME" value="localhost" />
         <const name="ORIANCCI_PHPUNIT_USERNAME" value="" />
         <const name="ORIANCCI_PHPUNIT_PASSWORD" value="" />
         <const name="ORIANCCI_PHPUNIT_DATABASE" value="" />
-    </php>
+    </php>-->
 
     <testsuite name="Oriancci Test Suite">
         <directory>tests/Oriancci</directory>
