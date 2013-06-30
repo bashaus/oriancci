@@ -28,6 +28,6 @@ class Equals extends \FilterIterator
     
     public function accept()
     {
-        return $this->getInnerIterator()->current()->{$this->field} == $this->value;
+        return $this->getInnerIterator()->current()->{$this->getField()} == $this->getValue();
     }
 }
