@@ -6,7 +6,7 @@ use Oriancci\Error;
 
 class Datetime extends \DateTime implements \JsonSerializable, DataTypeInterface
 {
-    use Datatype;
+    use DataType;
 
     const INPUT_DATE     = 'DATE';
     const INPUT_TIME     = 'TIME';

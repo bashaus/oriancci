@@ -1,6 +1,6 @@
 <?php
 
-namespace Oriancci\Datatype;
+namespace Oriancci\DataType;
 
 interface DataTypeInterface
 {
