@@ -2,7 +2,7 @@
 
 ini_set('date.timezone', 'UTC');
 
-$environmentalValues = [
+$envNames = [
 	'ORIANCCI_PHPUNIT_HOSTTYPE',
 	'ORIANCCI_PHPUNIT_HOSTNAME',
 	'ORIANCCI_PHPUNIT_USERNAME',
@@ -10,12 +10,14 @@ $environmentalValues = [
 	'ORIANCCI_PHPUNIT_DATABASE'
 ];
 
-foreach ($environmentalValues as $environmentalValue) {
-	if (!array_key_exists($environmentalValue, $_ENV)) {
-		throw new \Exception('Environmental value does not exists: ' . $environmentalValue);
+foreach ($envNames as $envName) {
+	$envValue = getenv($envName);
+
+	if ($envValue === false) {
+		throw new \Exception('Environmental value does not exists: ' . $envName);
 	}
 
-	define($environmentalValue, $_ENV[$environmentalValue]);
+	define($envName, $envValue);
 }
 
 require __DIR__ . '/Oriancci/units/OriancciTest.php';
@@ -43,11 +45,11 @@ if (class_exists('Monolog\Logger')) {
 
 $connection_manager = \Oriancci\ConnectionManager::getInstance();
 $connection_manager->build = [
-	'driver'	=> $_ENV['ORIANCCI_PHPUNIT_HOSTTYPE'],
-	'hostname'	=> $_ENV['ORIANCCI_PHPUNIT_HOSTNAME'],
-	'username'	=> $_ENV['ORIANCCI_PHPUNIT_USERNAME'],
-	'password'	=> $_ENV['ORIANCCI_PHPUNIT_PASSWORD'],
-	'database'	=> $_ENV['ORIANCCI_PHPUNIT_DATABASE'],
+	'driver'	=> ORIANCCI_PHPUNIT_HOSTTYPE,
+	'hostname'	=> ORIANCCI_PHPUNIT_HOSTNAME,
+	'username'	=> ORIANCCI_PHPUNIT_USERNAME,
+	'password'	=> ORIANCCI_PHPUNIT_PASSWORD,
+	'database'	=> ORIANCCI_PHPUNIT_DATABASE,
 	'logger'	=> $log
 ];
 
