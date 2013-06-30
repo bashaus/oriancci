@@ -1,7 +1,7 @@
 {
     "name": "oriancci/oriancci",
     "description": "A PSR and SPL ActiveRecord implementation for PHP 5.4+",
-    "homepage": "http://github.com/bashaus/oriancci",
+    "homepage": "http://bashaus.github.io/oriancci/",
     "type": "library",
     "license": "MIT",
     "authors": [
