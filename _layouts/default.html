@@ -14,15 +14,8 @@
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
+      <script src="{{ site.url }}/assets/js/html5shiv.js"></script>
     <![endif]-->
-
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
   </head>
 
   <body>
@@ -73,32 +66,32 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="{% if page.slug == "home" %}active{% endif %}">
-                <a href="{{ site.url }}/index.html">Home</a>
+                <a href="{{ site.url }}/">Home</a>
               </li>
 
               <li class="nav-header">Setup</li>
               <li class="{% if page.slug == "installation" %}active{% endif %}">
-                <a href="{{ site.url }}/docs/installation.html">Installation</a>
+                <a href="{{ site.url }}/docs/Installation">Installation</a>
               </li>
               <li class="{% if page.slug == "connection" %}active{% endif %}">
-                <a href="{{ site.url }}/docs/connection.html">Connection</a>
+                <a href="{{ site.url }}/docs/Connection">Connection</a>
               </li>
 
               <li class="nav-header">Usage</li>
               <li class="{% if page.slug == "conventions" %}active{% endif %}">
-                <a href="{{ site.url }}/docs/conventions.html">Conventions</a>
+                <a href="{{ site.url }}/docs/Conventions">Conventions</a>
               </li>
               <li class="{% if page.slug == "manipulating" %}active{% endif %}">
-                <a href="{{ site.url }}/docs/manipulating.html">Manipulating</a>
+                <a href="{{ site.url }}/docs/Manipulating">Manipulating</a>
               </li>
               <li class="{% if page.slug == "querying" %}active{% endif %}">
-                <a href="{{ site.url }}/docs/querying.html">Querying</a>
+                <a href="{{ site.url }}/docs/Querying">Querying</a>
               </li>
               <li class="{% if page.slug == "results" %}active{% endif %}">
-                <a href="{{ site.url }}/docs/results.html">Results</a>
+                <a href="{{ site.url }}/docs/Results">Results</a>
               </li>
               <li class="{% if page.slug == "events" %}active{% endif %}">
-                <a href="{{ site.url }}/docs/events.html">Events</a>
+                <a href="{{ site.url }}/docs/Events">Events</a>
               </li>
 
               <li class="nav-header">Other</li>
