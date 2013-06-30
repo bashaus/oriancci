@@ -283,8 +283,8 @@ class ModelTest extends OriancciTest
             'gender'    => 'F'
         ]);
 
-        $this->assertEquals(
-            '{"firstName":"Jane","email":"em@il.com","gender":"F","birthday":null}',
+        $this->assertJsonStringEqualsJsonString(
+            json_encode((object) ['firstName' => 'Jane', 'email' => 'em@il.com', 'gender' => 'F', 'birthday' => null]),
             json_encode($user)
         );
 
