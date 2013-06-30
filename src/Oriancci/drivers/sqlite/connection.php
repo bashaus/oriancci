@@ -27,6 +27,6 @@ class Connection extends \Oriancci\Connection
 
     public function getTableClass()
     {
-        return 'Oriancci\Drivers\MySQL\Table';
+        return 'Oriancci\Drivers\SQLite\Table';
     }
 }
