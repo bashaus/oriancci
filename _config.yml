@@ -2,5 +2,5 @@ safe: true
 lsi: false
 pygments: true
 
-baseurl: http://bashaus.github.io/oriancci/
+baseurl: http://bashaus.github.io/oriancci
 permalink: pretty
