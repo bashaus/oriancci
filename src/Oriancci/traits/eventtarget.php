@@ -5,7 +5,7 @@ namespace Oriancci\Traits;
 trait EventTarget
 {
 
-    public static $events = [];
+    protected static $events = [];
 
     public static function eventAttach($eventName, callable $callback)
     {
@@ -19,12 +19,12 @@ trait EventTarget
     public static function eventDetach($eventName, callable $callback)
     {
         if (!array_key_exists($eventName, static::$events)) {
-            return;
+            return false;
         }
 
-        foreach ($events as $i => $event) {
+        foreach (static::$events[$eventName] as $i => $event) {
             if ($callback == $event) {
-                unset(static::$events[$i]);
+                unset(static::$events[$eventName][$i]);
                 return true;
             }
         }
@@ -41,7 +41,11 @@ trait EventTarget
         $events = static::$events[$eventName];
 
         foreach ($events as $event) {
-            $result = call_user_func([$this, $event]);
+            if (is_array($event)) {
+                $result = call_user_func([$this, $event]);
+            } else {
+                $result = $event();
+            }
 
             if ($result === false && $propagateCancel == true) {
                 return false;
@@ -49,5 +53,14 @@ trait EventTarget
         }
 
         return true;
+    }
+
+    public static function eventCount($eventName)
+    {
+        if (!array_key_exists($eventName, static::$events)) {
+            return 0;
+        }
+
+        return count(static::$events[$eventName]);
     }
 }

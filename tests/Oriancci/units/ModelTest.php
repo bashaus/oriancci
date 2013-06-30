@@ -290,4 +290,41 @@ class ModelTest extends OriancciTest
 
         User::$serializable = null;
     }
+
+    /* event target */
+
+    public function testAfterConstruct()
+    {
+        $afterConstruct = false;
+        $afterConstructFunc = function() use(&$afterConstruct) {
+            $afterConstruct = true;
+        };
+
+        $afterInstantiation = false;
+        $afterInstantiationFunc = function() use(&$afterInstantiation) {
+            $afterInstantiation = true;
+        };
+
+        $afterSelection = false;
+        $afterSelectionFunc = function() use(&$afterSelection) {
+            $afterSelection = true;
+        };
+
+        User::eventAttach('afterConstruct', $afterConstructFunc);
+        User::eventAttach('afterInstantiation', $afterInstantiationFunc);
+        User::eventAttach('afterSelection', $afterSelectionFunc);
+
+        $user = new User;
+        $this->assertTrue($afterConstruct);
+        $this->assertTrue($afterInstantiation);
+        $this->assertFalse($afterSelection);
+
+        User::eventDetach('afterConstruct', $afterConstructFunc);
+        User::eventDetach('afterInstantiation', $afterInstantiationFunc);
+        User::eventDetach('afterSelection', $afterSelectionFunc);
+
+        $this->assertEquals(0, User::eventCount('afterConstruct'));
+        $this->assertEquals(0, User::eventCount('afterInstantiation'));
+        $this->assertEquals(0, User::eventCount('afterSelection'));
+    }
 }
