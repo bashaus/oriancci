@@ -16,4 +16,8 @@ trait Singleton
 
         return static::$instance;
     }
+
+    private function __construct()
+    {
+    }
 }

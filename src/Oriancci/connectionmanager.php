@@ -17,10 +17,6 @@ class ConnectionManager
     private $profiles = [];
     private $connections = [];
 
-    private function __construct()
-    {
-    }
-
     public function setDefault($profile)
     {
         $this->default = $profile;
@@ -31,7 +27,7 @@ class ConnectionManager
         return $this->default;
     }
 
-    public function get($profileName = null)
+    public function connect($profileName = null)
     {
         if (is_null($this->default)) {
             throw new \Exception('You must set a default connection in your ConnectionManager configuration');
