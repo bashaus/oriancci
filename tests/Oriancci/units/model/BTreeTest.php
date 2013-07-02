@@ -39,7 +39,7 @@ class BTreeTest extends OriancciTest
         $department = new Department;
         $department->name = 'User experience';
 
-        $before = Department::get(2);
+        $before = Department::select(2);
         $this->assertTrue($department->insertBefore($before));
     }
 
@@ -48,7 +48,7 @@ class BTreeTest extends OriancciTest
         $department = new Department;
         $department->name = 'User experience';
 
-        $after = Department::get(2);
+        $after = Department::select(2);
         $this->assertTrue($department->insertAfter($after));
     }
 
@@ -57,14 +57,14 @@ class BTreeTest extends OriancciTest
         $department = new Department;
         $department->name = 'PHP';
 
-        $backend = Department::get(3);
+        $backend = Department::select(3);
         $this->assertTrue($department->appendTo($backend));
         $this->assertCount(2, $department->parents());
     }
 
     public function testParent()
     {
-        $backend = Department::get(3);
+        $backend = Department::select(3);
         $root = Department::root();
 
         $this->assertEquals($root->autoIncrement(), $backend->parent()->autoIncrement());
@@ -84,7 +84,7 @@ class BTreeTest extends OriancciTest
 
     public function testDelete()
     {
-        $department = Department::get(3);
+        $department = Department::select(3);
         $department->delete();
     }
 }

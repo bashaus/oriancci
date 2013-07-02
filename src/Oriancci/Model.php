@@ -22,7 +22,6 @@ abstract class Model implements \JsonSerializable
 
     public static $staticMethodHandlers = [
         'selectBy'  => 'staticSelect',
-        'getBy'     => 'staticGet',
         'countBy'   => 'staticCount'
     ];
 
@@ -148,21 +147,6 @@ abstract class Model implements \JsonSerializable
         }
 
         return $this->{$autoIncrementField};
-    }
-
-    /* Primary keys */
-
-    public static function primaryKeyFields()
-    {
-    }
-
-    public static function primaryKeys()
-    {
-    }
-
-    public static function primaryKeyAsWhere()
-    {
-        return sprintf('%1$s = :%1$s', static::autoIncrementField());
     }
 
     /* Attributes */
@@ -326,7 +310,7 @@ abstract class Model implements \JsonSerializable
 
         $sqlParameters = [
             SET    => static::table()->columnsAsSet(),
-            WHERE  => $this->primaryKeyAsWhere(),
+            WHERE  => static::autoIncrementField() . ' = :' . static::autoIncrementField(),
             LIMIT  => 1
         ];
 
@@ -351,13 +335,12 @@ abstract class Model implements \JsonSerializable
         }
 
         $sqlParameters = [
-            WHERE => $this->primaryKeyAsWhere(),
+            WHERE => static::autoIncrementField() . ' = ?',
             LIMIT => 1
         ];
 
         $statement = static::table()->delete($sqlParameters);
-        $sqlData = [':' . static::autoIncrementField() => $this->autoIncrement()];
-        if ($statement->delete($sqlData) != 1) {
+        if ($statement->delete([$this->autoIncrement()]) != 1) {
             return false;
         }
 
@@ -472,25 +455,24 @@ abstract class Model implements \JsonSerializable
      */
     public static function select($sqlParameters = null)
     {
-        $statement = static::table()->select(
-            is_null($sqlParameters) ? [] : $sqlParameters
-        );
+        // Find by primary key
+        if (is_numeric($sqlParameters)) {
+            $statement = static::table()->select([
+                WHERE => static::autoIncrementField() . ' = ?',
+                LIMIT => 1
+            ]);
 
+            return $statement->one([$sqlParameters]);
+        }
+
+        // Find all
         if (is_null($sqlParameters)) {
+            $statement = static::table()->select([]);
             return $statement->select();
         }
-        
-        return $statement;
-    }
 
-    /**
-     * Gets a row by its primary key
-     */
-    public static function get($primaryKey)
-    {
-        $statement = static::table()->select([WHERE => static::autoIncrementField() . ' = ?']);
-        $statement->execute([$primaryKey]);
-        return $statement->fetchObject(get_called_class());
+        // Constructed statement
+        return static::table()->select($sqlParameters);
     }
 
     /**

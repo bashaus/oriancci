@@ -9,9 +9,9 @@ class ModelTest extends OriancciTest
 
     /* static - get */
 
-    public function testGetByPrimaryKey()
+    public function testAutoIncrement()
     {
-        $user = User::get(1);
+        $user = User::select(1);
         $this->assertInstanceOf('Oriancci\Models\User', $user);
     }
 
@@ -63,18 +63,12 @@ class ModelTest extends OriancciTest
         $this->assertFalse($exists);
     }
 
-    /* static - getBy */
+    /* static - select (one) */
 
-    public function testGetByMethodExists()
+    public function testSelectOneMethodExists()
     {
-        $user = User::getByFirstName('Adam');
-        $this->assertInstanceOf('Oriancci\Models\User', $user);
-    }
-
-    public function testGetByMethodDoesntExist()
-    {
-        $user = User::getByFirstName('Ben');
-        $this->assertFalse($user);
+        $user = User::selectByFirstName('Adam');
+        $this->assertInstanceOf('Oriancci\Models\User', $user[0]);
     }
 
     /* static - selectBy */
@@ -168,7 +162,7 @@ class ModelTest extends OriancciTest
     {
         $rows = $this->getConnection()->getRowCount(User::tableName());
 
-        $user = User::get(1);
+        $user = User::select(1);
         $user->firstName = 'Alfred';
 
         $this->assertTrue($user->save());
@@ -177,7 +171,7 @@ class ModelTest extends OriancciTest
 
     public function testDelete()
     {
-        $user = User::get(1);
+        $user = User::select(1);
         $this->assertTrue($user->delete());
         $this->assertEquals(0, $this->getConnection()->getRowCount('user', 'id = 1'));
     }
