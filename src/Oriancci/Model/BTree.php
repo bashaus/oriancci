@@ -36,7 +36,7 @@ class BTree extends Model
 
     public static function root()
     {
-        return static::find([WHERE => static::leftName() . ' = 1'])->one();
+        return static::select([WHERE => static::leftName() . ' = 1'])->one();
     }
 
     public static function deleteAll($sqlParameters, $sqlData = [])
@@ -272,7 +272,7 @@ class BTree extends Model
         $left = static::leftName();
         $right = static::rightName();
 
-        $sql = static::find(
+        $sql = static::select(
             [
                 WHERE    => $left . ' < :' . $left . ' AND '   . $right . ' > :' . $right,
                 ORDER_BY => [$left => ASC]
@@ -292,7 +292,7 @@ class BTree extends Model
         $left = static::leftName();
         $right = static::rightName();
 
-        return static::find(
+        return static::select(
             [
                 WHERE    => $left . ' < :' . $left . ' AND '   . $right . ' > :' . $right,
                 ORDER_BY => [$left => DESC],
@@ -323,7 +323,7 @@ class BTree extends Model
         $left = static::leftName();
         $right = static::rightName();
 
-        $sql = static::find(
+        $sql = static::select(
             [
                 WHERE    => $left . ' > :' . $left . ' AND '   . $right . ' < :' . $right,
                 ORDER_BY => [$left => ASC],

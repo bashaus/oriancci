@@ -21,7 +21,7 @@ Validation
 
 
 echo 'USERS: ' . PHP_EOL;
-$users = User::find()->select();
+$users = User::select()->select();
 echo $users->toCSV();
 echo PHP_EOL;
 
@@ -30,7 +30,7 @@ $user = User::last()->one();
 $user->delete();
 echo 'DONE';
 
-$users = User::find()->select();
+$users = User::select()->select();
 $departments = $users->relationship('department');
 foreach ($users as $user)
 {
@@ -38,7 +38,7 @@ foreach ($users as $user)
 }
 echo PHP_EOL;
 
-$departments = Department::find()->select();
+$departments = Department::select()->select();
 $users = $departments->users();
 foreach ($departments as $department)
 {
@@ -76,5 +76,5 @@ $department->name = 'New Department';
 $department->save(); // update
 $department->delete(); // delete
 
-$data = User::find()->select()->collate('id', 'name');
+$data = User::select()->select()->collate('id', 'name');
 print_r($data);

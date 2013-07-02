@@ -44,8 +44,8 @@ abstract class Relationship
 
     public $fromModel;
     public $fromField;
-    public $findModel;
-    public $findField;
+    public $selectModel;
+    public $selectField;
 
     private function __construct($relationshipData)
     {
@@ -84,17 +84,17 @@ abstract class Relationship
         $this->primaryField = $primaryModel::$primaryKey;
         $this->foreignField = $primaryModel . '_' . $primaryModel::$primaryKey;
 
-        // Get from/find information
+        // Get from/select information
         $this->fromModel = ($this->key == self::KEY_PRIMARY) ? $this->primaryModel : $this->foreignModel;
         $this->fromField = ($this->key == self::KEY_PRIMARY) ? $this->primaryField : $this->foreignField;
 
-        $this->findModel = ($this->key == self::KEY_PRIMARY) ? $this->foreignModel : $this->primaryModel;
-        $this->findField = ($this->key == self::KEY_PRIMARY) ? $this->foreignField : $this->primaryField;
+        $this->selectModel = ($this->key == self::KEY_PRIMARY) ? $this->foreignModel : $this->primaryModel;
+        $this->selectField = ($this->key == self::KEY_PRIMARY) ? $this->foreignField : $this->primaryField;
     }
 
     public function query($resultsIn)
     {
-        $findModel = $this->findModel;
+        $selectModel = $this->selectModel;
 
         // Run the query
         $values = $resultsIn->each($this->fromField);
@@ -105,10 +105,10 @@ abstract class Relationship
         }
 
         $sqlQuery = [
-            WHERE => $this->findField . ' IN (' . implode(', ', array_fill(0, count($values), '?')) . ')'
+            WHERE => $this->selectField . ' IN (' . implode(', ', array_fill(0, count($values), '?')) . ')'
         ];
 
-        $sqlStmt = $findModel::find($sqlQuery);
+        $sqlStmt = $selectModel::select($sqlQuery);
 
         $resultsOut = $sqlStmt->select($values);
 

@@ -9,7 +9,7 @@ class HasOne extends \Oriancci\Relationship
     {
         foreach ($resultsIn as $resultIn) {
             foreach ($resultsOut as $resultOut) {
-                if ($resultIn->{$this->fromField} == $resultOut->{$this->findField}) {
+                if ($resultIn->{$this->fromField} == $resultOut->{$this->selectField}) {
                     $resultIn->relationshipSet($this->name, $resultOut);
                     break;
                 }

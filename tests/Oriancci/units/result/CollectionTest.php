@@ -9,7 +9,7 @@ class CollectionTest extends OriancciTest
 
     public function testCollateString()
     {
-        $users = User::find();
+        $users = User::select();
         $this->assertEquals(
             [
                 1  => 'Adam',
@@ -32,7 +32,7 @@ class CollectionTest extends OriancciTest
 
     public function testCollateArray()
     {
-        $users = User::find();
+        $users = User::select();
         $this->assertEquals(
             [
                 'M' => [
@@ -59,7 +59,7 @@ class CollectionTest extends OriancciTest
 
     public function testEach()
     {
-        $users = User::find();
+        $users = User::select();
         $this->assertEquals(
             [
                 'Adam', 'Belinda', 'Charlie', 'Daniella', 'Evan', 'Francesca', 
@@ -71,7 +71,7 @@ class CollectionTest extends OriancciTest
 
     public function testIterator()
     {
-        $users = User::find();
+        $users = User::select();
         $this->assertCount(13, $users);
 
         foreach ($users as $user) {

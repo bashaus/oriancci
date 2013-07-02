@@ -11,7 +11,7 @@ class HasMany extends \Oriancci\Relationship
             $relationshipArray = [];
 
             foreach ($resultsOut as $resultOut) {
-                if ($resultIn->{$this->fromField} == $resultOut->{$this->findField}) {
+                if ($resultIn->{$this->fromField} == $resultOut->{$this->selectField}) {
                     $relationshipArray[] = $resultOut;
                 }
             }

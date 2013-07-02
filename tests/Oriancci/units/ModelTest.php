@@ -15,28 +15,28 @@ class ModelTest extends OriancciTest
         $this->assertInstanceOf('Oriancci\Models\User', $user);
     }
 
-    /* static - find */
+    /* static - select */
 
-    public function testFindAll()
+    public function testSelectAll()
     {
-        $users = User::find();
+        $users = User::select();
         $this->assertInstanceOf('Oriancci\Result\Collection', $users);
         $this->assertEquals(13, $users->count());
     }
 
-    public function testFindWhereNamed()
+    public function testSelectWhereNamed()
     {
-        $findUsers = User::find([WHERE => 'gender = :gender']);
-        $users = $findUsers->select([':gender' => 'M']);
+        $selectUsers = User::select([WHERE => 'gender = :gender']);
+        $users = $selectUsers->select([':gender' => 'M']);
         
         $this->assertInstanceOf('Oriancci\Result\Collection', $users);
         $this->assertNotEquals(0, $users->count());
     }
 
-    public function testFindWhereUnnamed()
+    public function testSelectWhereUnnamed()
     {
-        $findUsers = User::find([WHERE => 'gender = ?']);
-        $users = $findUsers->select(['M']);
+        $selectUsers = User::select([WHERE => 'gender = ?']);
+        $users = $selectUsers->select(['M']);
         
         $this->assertInstanceOf('Oriancci\Result\Collection', $users);
         $this->assertNotEquals(0, $users->count());
@@ -77,18 +77,18 @@ class ModelTest extends OriancciTest
         $this->assertFalse($user);
     }
 
-    /* static - findBy */
+    /* static - selectBy */
 
-    public function testFindByMethodConjunctionOr()
+    public function testSelectByMethodConjunctionOr()
     {
-        $users = User::findByFirstNameOrLastName('Adam', 'Adam');
+        $users = User::selectByFirstNameOrLastName('Adam', 'Adam');
         $this->assertInstanceOf('Oriancci\Result\Collection', $users);
         $this->assertEquals(1, $users->count());
     }
 
-    public function testFindByMethodConjunctionAnd()
+    public function testSelectByMethodConjunctionAnd()
     {
-        $users = User::findByFirstNameAndLastName('Adam', 'Adam');
+        $users = User::selectByFirstNameAndLastName('Adam', 'Adam');
         $this->assertInstanceOf('Oriancci\Result\Collection', $users);
         $this->assertEquals(0, $users->count());
     }

@@ -9,7 +9,7 @@ class CursorTest extends OriancciTest
 
     public function testCursor()
     {
-        $users = User::find([])
+        $users = User::select([])
         	->setResultClass('\Oriancci\Result\Cursor')
         	->select();
 

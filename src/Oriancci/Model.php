@@ -21,7 +21,7 @@ abstract class Model implements \JsonSerializable
     public $errors;
 
     public static $staticMethodHandlers = [
-        'findBy'    => 'staticFind',
+        'selectBy'  => 'staticSelect',
         'getBy'     => 'staticGet',
         'countBy'   => 'staticCount'
     ];
@@ -419,7 +419,7 @@ abstract class Model implements \JsonSerializable
         throw new \Exception('Could not understand static method: ' . $method);
     }
 
-    public static function staticFind($name, $args)
+    public static function staticSelect($name, $args)
     {
         $sqlParameters = Query\Built::methodToStatement($name, $args);
         $inputParameters = $sqlParameters[PARAMS];
@@ -470,7 +470,7 @@ abstract class Model implements \JsonSerializable
     /**
      * Finds multiple rows based on conditions
      */
-    public static function find($sqlParameters = null)
+    public static function select($sqlParameters = null)
     {
         $statement = static::table()->select(
             is_null($sqlParameters) ? [] : $sqlParameters

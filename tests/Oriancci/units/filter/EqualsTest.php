@@ -9,7 +9,7 @@ class EqualsTest extends OriancciTest
     
     public function testFilter()
     {
-        $users = User::find();
+        $users = User::select();
         $this->assertCount(13, $users);
 
         foreach ($users as $user) {
