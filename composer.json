@@ -14,13 +14,20 @@
             "homepage": "https://github.com/bashaus/oriancci/contributors"
         }
     ],
+    "require-dev": {
+        "phpunit/dbunit": "1.2.*"
+    },
     "require": {
         "php": ">=5.4.0",
-        "psr/log": "~1.0"
+        "psr/log": "~1.0",
+        "aura/filter": "dev-master"
     },
     "autoload": {
         "files": [ "src/Oriancci/constants.php" ],
         "psr-0": {"Oriancci": "src/"}
+    },
+    "config": {
+        "bin-dir" : "bin"
     },
     "suggest": {
         "monolog/monolog": "Enables log messaging through the PSR-3 standard"

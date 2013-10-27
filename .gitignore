@@ -1,8 +1,8 @@
 .DS_Store
 tests/Oriancci/coverage
 tests/oriancci.log
+bin/
 vendor/
-composer.lock
 composer.phar
 phpunit.phar
 phpunit.xml
