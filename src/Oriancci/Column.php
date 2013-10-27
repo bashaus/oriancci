@@ -31,8 +31,8 @@ abstract class Column
 
     private $simpleType = null;
 
+    abstract public function getName();         // id
     abstract public function getType();         // VARCHAR(255)
-    abstract public function getName();         // VARCHAR(255) => VARCHAR
     abstract public function getArgs();         // ENUM('one', 'two') => ['one', 'two']
     abstract public function isAllowedNull();   // true/false
     abstract public function isPrimaryKey();    // true/false
@@ -59,140 +59,105 @@ abstract class Column
         return array_fill_keys(str_getcsv($args, ',', "'"), true);
     }
 
-    public function validate($value)
+    public function validate($filter)
     {
-        // Check if NULL is allowed
-        $isNull = false;
+        $this->validateNull($filter);
+        $this->validateValue($filter);
+    }
 
-        if ($value instanceof DataType\DataTypeInterface) {
-            $isNull = $value->isNull();
-        } elseif (is_null($value)) {
-            $isNull = true;
-        }
-
-        if ($isNull) {
-            if ($this->isPrimaryKey()) {
-                return;
-            } elseif ($this->isAllowedNull()) {
-                return;
-            } else {
-                return $this->errorGenerate('NULL_NOT_EXPECTED');
-            }
-        }
-
-        // If this is a DataType, assign the field name and passthrough errors
-        if ($value instanceof DataType\DataTypeInterface) {
-            if ($value->hasErrors()) {
-                $errors = $value->getErrors();
-                
-                foreach ($errors as $error) {
-                    $error->field = $this->field;
-                }
-
-                return $errors;
-            }
-        }
-
-        // If the value is exactly blank, we don't need to check it
-        // as we will assume that it is going to be treated as NULL
-        if ($value === '') {
+    protected function validateNull($filter)
+    {
+        // Primary keys are allowed to be null
+        if ($this->isPrimaryKey()) {
             return;
         }
 
+        // If null is allowed, continue
+        if ($this->isAllowedNull()) {
+            return;
+        }
+
+        if (in_array($this->getSimpleType(), array(self::SIMPLE_TYPE_DATE, self::SIMPLE_TYPE_TIME, self::SIMPLE_TYPE_DATETIME))) {
+            return;
+        }
+
+        $filter->addSoftRule($this->getName(), $filter::IS, 'strlenMin', 1);
+    }
+
+    protected function validateValue($filter)
+    {
         switch ($this->simpleType) {
             case self::SIMPLE_TYPE_STRING:
-                return $this->validateString($value);
+                return $this->validateString($filter);
             break;
             case self::SIMPLE_TYPE_TEXT:
-                return $this->validateString($value);
+                return $this->validateString($filter);
             break;
             case self::SIMPLE_TYPE_INTEGER:
-                return $this->validateInt($value);
+                return $this->validateInt($filter);
             break;
             case self::SIMPLE_TYPE_FLOAT:
-                return $this->validateFloat($value);
+                return $this->validateFloat($filter);
             break;
             case self::SIMPLE_TYPE_BOOLEAN:
-                return $this->validateBoolean($value);
+                return $this->validateBoolean($filter);
             break;
             case self::SIMPLE_TYPE_DATE:
-                return $this->validateDateTime($value);
+                return $this->validateDateTime($filter);
             break;
             case self::SIMPLE_TYPE_TIME:
-                return $this->validateDateTime($value);
+                return $this->validateDateTime($filter);
             break;
             case self::SIMPLE_TYPE_DATETIME:
-                return $this->validateDateTime($value);
+                return $this->validateDateTime($filter);
             break;
             case self::SIMPLE_TYPE_ENUM:
-                return $this->validateEnum($value);
+                return $this->validateEnum($filter);
             break;
             case self::SIMPLE_TYPE_SET:
-                return $this->validateSet($value);
+                return $this->validateSet($filter);
             break;
         }
     }
 
-    private function validateString($value)
+    private function validateString($filter)
     {
         $typeArgs = $this->getArgs();
-        if (!is_null($typeArgs)) {
-            if (strlen($value) > $typeArgs) {
-                return $this->errorGenerate('STRING_TOO_LONG');
-            }
+        if (is_null($typeArgs)) {
+            return;
         }
+
+        $filter->addSoftRule($this->getName(), $filter::IS_BLANK_OR, 'strlenMax', $typeArgs);
     }
 
-    public function validateInt($value)
+    public function validateInt($filter)
     {
-        $filterValue = filter_var($value, FILTER_VALIDATE_INT);
-        if ($filterValue !== 0 && $filterValue === false) {
-            return $this->errorGenerate('NUMBER_NOT_NUMERIC');
-        }
+        $filter->addSoftRule($this->getName(), $filter::IS_BLANK_OR, 'int');
     }
 
-    public function validateFloat($value)
+    public function validateFloat($filter)
     {
-        $filterValue = filter_var($value, FILTER_VALIDATE_FLOAT);
-        if ($filterValue !== 0 && $filterValue === false) {
-            return [static::errorGenerate('NUMBER_NOT_NUMERIC')];
-        }
+        $filter->addSoftRule($this->getName(), $filter::IS_BLANK_OR, 'float');
     }
 
-    public function validateBoolean($value)
+    public function validateBoolean($filter)
     {
-        if ($value != 0 && $value != 1) {
-            return [$this->errorGenerate('BOOLEAN_NOT_VALID')];
-        }
+        $filter->addSoftRule($this->getName(), $filter::IS_BLANK_OR, 'bool');
     }
 
     public function validateDateTime($value)
     {
-        if ($value->hasErrors()) {
-            return $value->getErrors();
-        }
     }
 
-    private function validateEnum($value)
+    private function validateEnum($filter)
     {
         $typeArgs = $this->getArgs();
-        if (!array_key_exists($value, $typeArgs)) {
-            return $this->errorGenerate('ENUM_NOT_VALID');
-        }
+        $filter->addSoftRule($this->getName(), $filter::IS_BLANK_OR, 'inKeys', $typeArgs);
     }
 
     private function validateSet($values)
     {
         $typeArgs = $this->getArgs();
-        foreach ($values as $value) {
-            if (!array_key_exists($value, $typeArgs)) {
-                return $this->errorGenerate('SET_NOT_VALID');
-            }
-        }
-    }
-
-    private function errorGenerate($code)
-    {
-        return new Error(['code' => $code, 'field' => $this->getName()]);
+        $filter->addSoftRule($this->getName(), $filter::IS_BLANK_OR, 'inKeys', $typeArgs);
     }
 }

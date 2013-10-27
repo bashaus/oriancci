@@ -5,11 +5,12 @@ namespace Oriancci\Models;
 class User extends \Oriancci\Model
 {
 
-	static $validation = [
-		'firstName' => ['required' => true],
-		'lastName' 	=> ['required' => true],
-		'email' 	=> ['email'    => true],
-	];
+    public function validate($filter)
+    {
+        $filter->addSoftRule('firstName', $filter::IS, 'alpha');
+        $filter->addSoftRule('lastName' , $filter::IS, 'alpha');
+        $filter->addSoftRule('email'    , $filter::IS, 'email');
+    }
 
     public static function tableName()
     {

@@ -8,12 +8,8 @@ abstract class Model implements \JsonSerializable
 
     const DEFAULT_AUTO_INCREMENT = 'id';
 
-    public static $accessible = null;
     public static $foreignKeys = [];
     public static $serializable = null;
-
-    public static $field = [];
-    public static $validation = [];
 
     private $attributes = [];
     private $relationships = [];
@@ -177,57 +173,28 @@ abstract class Model implements \JsonSerializable
 
     public function setAttribute($attributeName, $attributeValue)
     {
-        if (!is_null(static::$accessible) && !array_key_exists($attributeName, static::$accessible)) {
-            return false;
-        }
-
         $this->$attributeName = $attributeValue;
-        return true;
     }
 
     /* abstract */
-    public function validate()
+    public function validate($filter)
     {
-    }
-
-    protected function validation()
-    {
-        $this->errors->clear();
-
-        // Loop through each column and validate their type
-        foreach (static::table()->columns() as $column) {
-            $value = $this->{$column->getName()};
-            $errors = $column->validate($value);
-
-            if (is_object($errors)) {
-                $this->errors[] = $errors;
-            } elseif (is_array($errors)) {
-                foreach ($errors as $error) {
-                    $this->errors[] = $error;
-                }
-            }
-        }
-
-        $validation = new Validation\Validation($this);
-        $errors = $validation->validate();
-
-        if (is_object($errors)) {
-            $this->errors[] = $errors;
-        }
-
-        if (is_array($errors)) {
-            foreach ($errors as $error) {
-                $this->errors[] = $error;
-            }
-        }
-
-        $this->validate();
     }
 
     public function isValid()
     {
-        $this->validation();
-        return $this->errors->count() == 0;
+        $filter = require 'vendor/aura/filter/scripts/instance.php';
+
+        foreach (static::table()->columns() as $column) {
+            $column->validate($filter);
+        }
+
+        $this->validate($filter);
+        $valid = $filter->values($this);
+
+        $this->errors->exchangeArray($filter->getMessages());
+
+        return $valid;
     }
 
     /**
@@ -268,7 +235,7 @@ abstract class Model implements \JsonSerializable
             SET => static::table()->columnsAsSet()
         ];
 
-        $sqlData = $this->toArray();
+        $sqlData = $this->toSQLData();
 
         // Insert
         $statement = static::table()->insert($sqlParameters);
@@ -316,7 +283,7 @@ abstract class Model implements \JsonSerializable
 
         // Update
         $statement = static::table()->update($sqlParameters);
-        $sqlData = $this->toArray();
+        $sqlData = $this->toSQLData();
 
         if ($statement->update($sqlData) != 1) {
             return false;
@@ -361,7 +328,9 @@ abstract class Model implements \JsonSerializable
         }
 
         $statement = static::table()->delete($sqlParameters);
-        $statement->execute($sqlData);
+        if (!$statement->execute($sqlData)) {
+            return false;
+        }
 
         return $statement->rowCount();
     }
@@ -378,7 +347,9 @@ abstract class Model implements \JsonSerializable
         }
 
         $statement = static::table()->update($sqlParameters);
-        $statement->execute($sqlData);
+        if (!$statement->execute($sqlData)) {
+            return false;
+        }
 
         return $statement->rowCount();
     }
@@ -662,35 +633,11 @@ abstract class Model implements \JsonSerializable
         return $relationship->query($dataIn);
     }
 
-
-
-
-
-
-
-
-
-
-
     /* Transaction */
     public static function transact($callable)
     {
         return static::connection()->transact($callable);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /* Serialisation */
 
@@ -715,10 +662,10 @@ abstract class Model implements \JsonSerializable
 
 
     /**
-     * Convert the object to a 2D array
+     * Prepare for use in SQL
      */
 
-    public function toArray()
+    public function toSQLData()
     {
         $return = [];
 
@@ -734,6 +681,21 @@ abstract class Model implements \JsonSerializable
             }
 
             $return[':' . $column->getName()] = $columnValue;
+        }
+
+        return $return;
+    }
+
+    /**
+     * Convert the object to a 2D array
+     */
+
+    public function toArray()
+    {
+        $return = [];
+
+        foreach (static::table()->columns() as $column) {
+            $return[$column->getName()] = $this->{$column->getName()};
         }
 
         return $return;
